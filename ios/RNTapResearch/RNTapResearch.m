@@ -26,12 +26,12 @@ RCT_EXPORT_METHOD(isSurveyAvailable:(RCTResponseSenderBlock)callback)
   callback(@[num]);
 }
 
-//RCT_EXPORT_METHOD(isSurveyAvailableForIdentifier:(NSString *)identifier callback:(RCTResponseSenderBlock)callback)
-//{
-//  BOOL available = [TapResearch isSurveyAvailableForIdentifier:identifier];
-//  NSNumber *num = [NSNumber numberWithBool:available];
-//  callback(@[num]);
-//}
+RCT_EXPORT_METHOD(isSurveyAvailableForIdentifier:(NSString *)identifier callback:(RCTResponseSenderBlock)callback)
+{
+  BOOL available = [TapResearch isSurveyAvailableForIdentifier:identifier];
+  NSNumber *num = [NSNumber numberWithBool:available];
+  callback(@[num]);
+}
 
 RCT_EXPORT_METHOD(showSurvey)
 {

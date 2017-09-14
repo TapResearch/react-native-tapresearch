@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		69E031A21F60EF3B00B29EB7 /* RNTapResearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 694407AC1F60D62800E7C7F2 /* RNTapResearch.m */; };
-		69E031DA1F60F5A500B29EB7 /* TapResearchSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69E031D81F60F22800B29EB7 /* TapResearchSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,7 +26,6 @@
 		694407AB1F60D62800E7C7F2 /* RNTapResearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNTapResearch.h; path = RNTapResearch/RNTapResearch.h; sourceTree = "<group>"; };
 		694407AC1F60D62800E7C7F2 /* RNTapResearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNTapResearch.m; path = RNTapResearch/RNTapResearch.m; sourceTree = "<group>"; };
 		694407FA1F60E8DC00E7C7F2 /* libRNTapResearchSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTapResearchSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		69E031D81F60F22800B29EB7 /* TapResearchSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TapResearchSDK.framework; path = "../../TapResearch-iOS-SDK/TapResearchSDK.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,36 +33,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69E031DA1F60F5A500B29EB7 /* TapResearchSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B07FAE1A68108700A75B9A /* RNTapResearchSDK */ = {
+		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
 				694407AB1F60D62800E7C7F2 /* RNTapResearch.h */,
 				694407AC1F60D62800E7C7F2 /* RNTapResearch.m */,
-			);
-			name = RNTapResearchSDK;
-			sourceTree = "<group>";
-		};
-		69E031D71F60F22800B29EB7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				69E031D81F60F22800B29EB7 /* TapResearchSDK.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		83CBB9F61A601CBA00E9B192 = {
-			isa = PBXGroup;
-			children = (
-				13B07FAE1A68108700A75B9A /* RNTapResearchSDK */,
 				83CBBA001A601CBA00E9B192 /* Products */,
-				69E031D71F60F22800B29EB7 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -154,7 +134,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = "/Users/drnkenmonkey/Documents/TapResearch-iOS-SDK/**";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -178,7 +158,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "/Users/drnkenmonkey/Documents/TapResearch-iOS-SDK/**";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
