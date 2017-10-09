@@ -23,7 +23,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
         implements LifecycleEventListener, TapResearchOnRewardListener, TapResearchSurveyListener {
 
     private final ReactApplicationContext reactContext;
-
+    private boolean initialized = false;
 
     public RNTapResearchModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -38,30 +38,45 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void initWithApiToken(String apiToken) {
-      TapResearch.configure(apiToken, getCurrentActivity());
-      TapResearch.getInstance().setSurveyListener(this);
-      TapResearch.getInstance().setOnRewardListener(this);
+      if (getCurrentActivity() != null) {
+        TapResearch.configure(apiToken, getCurrentActivity());
+        TapResearch.getInstance().setSurveyListener(this);
+        TapResearch.getInstance().setOnRewardListener(this);
+        this.initialized = true;
+      } else {
+          Log.w("TRLogTag", "SDK initialization failed because getCurrentActivity == null");
+      }
     }
 
     @ReactMethod
     public void setUniqueUserIdentifier(String uniqueIdentifier) {
-        Log.i("tap", "identifier - " + uniqueIdentifier);
-        TapResearch.getInstance().setUniqueUserIdentifier(uniqueIdentifier);
+        if (this.initialized) {
+          TapResearch.getInstance().setUniqueUserIdentifier(uniqueIdentifier);
+        } else {
+          Log.w("TRLogTag", "SDK not initialized");
+        }
     }
 
     @ReactMethod
     public void isSurveyAvailable(Callback callback) {
-        callback.invoke(TapResearch.getInstance().isSurveyAvailable());
+        boolean isSurveyAvailable = this.initialized ? TapResearch.getInstance().isSurveyAvailable() : false;
+        callback.invoke(isSurveyAvailable);
     }
 
     @ReactMethod
     public void showSurvey() {
-        TapResearch.getInstance().showSurvey();
+        if (this.initialized) {
+          TapResearch.getInstance().showSurvey();
+        } else {
+          Log.w("TRLogTag", "SDK not initialized");
+        }
     }
 
     @ReactMethod
     public void showSurveyWithIdentifier(String surveyIdentifier) {
-        TapResearch.getInstance().showSurvey(surveyIdentifier);
+        if (this.initialized) {
+          TapResearch.getInstance().showSurvey(surveyIdentifier);
+        }
     }
 
     private void sendEvent(ReactContext reactContext,
@@ -110,6 +125,6 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
 
     @Override
     public void onHostDestroy() {
-        // Actvity `onDestroy`
+
     }
 }
