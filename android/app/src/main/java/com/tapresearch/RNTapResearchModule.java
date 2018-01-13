@@ -99,7 +99,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
-    public void setActionBarTextColor(String hexColor) {
+    public void setNavigationBarTextColor(String hexColor) {
       if(this.initialized) {
         int color = Color.parseColor(hexColor);
         TapResearch.getInstance().setActionBarTextColor(color);

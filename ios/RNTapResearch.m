@@ -69,7 +69,7 @@ RCT_EXPORT_METHOD(setNavigationBarText:(NSString *)text)
   [TapResearch setNavigationBarText:text];
 }
 
-RCT_EXPORT_METHOD(setActionBarTextColor:(UIColor *)hexColor)
+RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
 {
   UIColor *color = [RNTapResearch colorFromHexString:hexColor];
   [TapResearch setNavigationBarTextColor:color];
