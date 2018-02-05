@@ -68,6 +68,12 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
+    public void isSurveyAvailableForIdentifier(String surveyIdentifier, Callback callback) {
+        boolean isSurveyAvailable = this.initialized ? TapResearch.getInstance().isSurveyAvailable(surveyIdentifier) : false;
+        callback.invoke(isSurveyAvailable);
+    }
+
+    @ReactMethod
     public void showSurvey() {
         if (this.initialized) {
           TapResearch.getInstance().showSurvey();
