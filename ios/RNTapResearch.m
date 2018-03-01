@@ -1,22 +1,14 @@
 #import "RNTapResearch.h"
+#import <objc/runtime.h>
+
 
 @implementation RNTapResearch
 {
   bool hasListeners;
+  NSMutableDictionary *placementsCache;
 }
-
-+ (UIColor *)colorFromHexString:(NSString *)hexString {
-    unsigned rgbValue = 0;
-    NSScanner *scanner = [NSScanner scannerWithString:hexString];
-    [scanner setScanLocation:1];
-    [scanner scanHexInt:&rgbValue];
-
-    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
-}
-
 
 RCT_EXPORT_MODULE();
-
 - (dispatch_queue_t)methodQueue
 {
   return dispatch_get_main_queue();
@@ -26,36 +18,39 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(initWithApiToken:(NSString *)apiToken)
 {
-  [TapResearch initWithApiToken:apiToken delegate:self];
-}
-
-RCT_EXPORT_METHOD(isSurveyAvailable:(RCTResponseSenderBlock)callback)
-{
-  BOOL available = [TapResearch isSurveyAvailable];
-  NSNumber *num = [NSNumber numberWithBool:available];
-  callback(@[num]);
-}
-
-RCT_EXPORT_METHOD(isSurveyAvailableForIdentifier:(NSString *)identifier callback:(RCTResponseSenderBlock)callback)
-{
-  BOOL available = [TapResearch isSurveyAvailableForIdentifier:identifier];
-  NSNumber *num = [NSNumber numberWithBool:available];
-  callback(@[num]);
-}
-
-RCT_EXPORT_METHOD(showSurvey)
-{
-  [TapResearch showSurveyWithDelegate:self];
-}
-
-RCT_EXPORT_METHOD(showSurveyWithIdentifier:(NSString *)identifier)
-{
-  [TapResearch showSurveyWithIdentifier:identifier delegate:self];
+  [TapResearch initWithApiToken:apiToken developmentPlatform:PLATFORM developmentPlatformVersion:PLATFORM_VERSION delegate:self];
 }
 
 RCT_EXPORT_METHOD(setUniqueUserIdentifier:(NSString *)userIdentifier)
 {
   [TapResearch setUniqueUserIdentifier:userIdentifier];
+}
+
+RCT_EXPORT_METHOD(initPlacement:(NSString *)placementIdentifier callback:(RCTResponseSenderBlock) callback)
+{
+  if (!placementsCache) {
+    placementsCache = [[NSMutableDictionary alloc] init];
+  }
+  [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
+    [placementsCache setObject:placement forKey:placement.placementIdentifier];
+    NSDictionary *placementDict = [TRSerilizationHelper dictionaryWithPropertiesOfObject:placement];
+    callback(@[placementDict]);
+  }];
+}
+
+RCT_EXPORT_METHOD(showSurveyWall:(NSDictionary *)placementDict)
+{
+  if (!placementsCache) {
+    NSLog(@"Init placement wasn't called there is no available placement");
+    return;
+  }
+  NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
+  TRPlacement *placement = [placementsCache objectForKey:placementIdentifier];
+  if (!placement) {
+    NSLog(@"Placement is missing make sure you are passing the right placement");
+    return;
+  }
+  [placement showSurveyWallWithDelegate:self];
 }
 
 RCT_EXPORT_METHOD(setNavigationBarColor:(NSString *)hexColor)
@@ -75,67 +70,33 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
   [TapResearch setNavigationBarTextColor:color];
 }
 
-#pragma mark - TapResearchDelegate
-
-- (void)tapResearchDidReceiveRewardWithQuantity:(NSInteger)quantity transactionIdentifier:(NSString *)transactionIdentifier currencyName:(NSString *)currencyName payoutEvent:(NSInteger)payoutEvent offerIdentifier:(NSString *)offerIdentifier
-{
-  if (hasListeners) {
-
-      NSDictionary *body = @{
-          @"quantity": @(quantity),
-          @"transactionIdentifier": transactionIdentifier,
-          @"currencyName": currencyName,
-          @"payoutEvent": @(payoutEvent),
-          @"offerIdentifier": offerIdentifier
-      };
-      [self sendEventWithName:@"tapResearchDidReceiveReward" body:body];
-  }
-}
-
-- (void)tapResearchOnSurveyAvailable
-{
-  if (hasListeners) [self sendEventWithName:@"tapResearchOnSurveyAvailable" body:nil];
-}
-
-- (void)tapResearchOnSurveyAvailableWithPlacement:(NSString *)placement
-{
-  NSDictionary *body = @{@"placementIdentifier":placement};
-  if (hasListeners) [self sendEventWithName:@"tapResearchOnSurveyAvailableWithPlacement" body:body];
-}
-
-- (void)tapResearchOnSurveyNotAvailable
-{
-  if (hasListeners) [self sendEventWithName:@"tapResearchOnSurveyNotAvailable" body:nil];
-}
-
-- (void)tapResearchOnSurveyNotAvailableWithPlacement:(NSString *)placement
-{
-  NSDictionary *body = @{@"placementIdentifier":placement};
-  if (hasListeners) [self sendEventWithName:@"tapResearchOnSurveyNotAvailableWithPlacement" body:body];
-}
 
 #pragma mark - TapResearchSurveyDelegate
-
-- (void)tapResearchSurveyModalOpened
+- (void)tapResearchSurveyWallOpenedWithPlacement:(TRPlacement *)placement
 {
-  if (hasListeners) [self sendEventWithName:@"tapResearchSurveyModalOpened" body:nil];
+  [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallOpened"];
 }
 
-- (void)tapResearchSurveyModalOpenedWithPlacement:(NSString *)placement
+- (void)tapResearchSurveyWallDismissedWithPlacement:(TRPlacement *)placement
 {
-  NSDictionary *body = @{@"placementIdentifier":placement};
-  if (hasListeners) [self sendEventWithName:@"tapResearchSurveyModalOpenedWithPlacement" body:body];
+  [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallDismissed"];
 }
 
-- (void)tapResearchSurveyModalDismissed
+- (void)emitPlacement:(TRPlacement *)placement eventName:(NSString *)eventName
 {
-  if (hasListeners) [self sendEventWithName:@"tapResearchSurveyModalDismissed" body:nil];
+  NSDictionary *placementDict = [TRSerilizationHelper dictionaryWithPropertiesOfObject:placement];
+  NSLog(@"Sending event %@", eventName);
+  [self sendEventWithName:eventName body:placementDict];
 }
 
-- (void)tapResearchSurveyModalDismissedWithPlacement:(NSString *)placement
+#pragma mark - TapResearchRewardsDelegate
+
+- (void)tapResearchDidReceiveReward:(TRReward *)reward
 {
-  NSDictionary *body = @{@"placementIdentifier":placement};
-  if (hasListeners) [self sendEventWithName:@"tapResearchSurveyModalDismissedWithPlacement" body:body];
+  if (hasListeners) {
+    NSDictionary *rewardDict = [TRSerilizationHelper dictionaryWithPropertiesOfObject:reward];
+    [self sendEventWithName:@"tapResearchOnReceivedReward" body:rewardDict];
+  }
 }
 
 #pragma Lifecycle
@@ -153,16 +114,22 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
 - (NSArray<NSString *> *)supportedEvents
 {
   return @[
-           @"tapResearchDidReceiveReward",
-           @"tapResearchOnSurveyAvailable",
-           @"tapResearchOnSurveyAvailableWithPlacement",
-           @"tapResearchOnSurveyNotAvailable",
-           @"tapResearchOnSurveyNotAvailableWithPlacement",
-           @"tapResearchSurveyModalOpened",
-           @"tapResearchSurveyModalOpenedWithPlacement",
-           @"tapResearchSurveyModalDismissed",
-           @"tapResearchSurveyModalDismissedWithPlacement"
+           @"tapResearchOnSurveyWallOpened",
+           @"tapResearchOnSurveyWallDismissed",
+           @"tapResearchOnReceivedReward",
            ];
+}
+
+#pragma helpers
+
+
++ (UIColor *)colorFromHexString:(NSString *)hexString {
+  unsigned rgbValue = 0;
+  NSScanner *scanner = [NSScanner scannerWithString:hexString];
+  [scanner setScanLocation:1];
+  [scanner scanHexInt:&rgbValue];
+
+  return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
 @end
