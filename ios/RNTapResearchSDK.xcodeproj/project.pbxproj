@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B40697C204717F40061B993 /* TapResearchSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B40697B204717F40061B993 /* TapResearchSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		3B406A662047410C0061B993 /* TapResearchSDK in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B406A652047410C0061B993 /* TapResearchSDK */; };
 		69E031A21F60EF3B00B29EB7 /* RNTapResearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 694407AC1F60D62800E7C7F2 /* RNTapResearch.m */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3B406979204717A50061B993 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3B40697A204717B40061B993 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3B40697B204717F40061B993 /* TapResearchSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TapResearchSDK.framework; sourceTree = "<group>"; };
+		3B40697D204718360061B993 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3B40697E2047183F0061B993 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		3B40697F204718460061B993 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		3B406980204718520061B993 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3B406A652047410C0061B993 /* TapResearchSDK */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = TapResearchSDK; path = TapResearchSDK.framework/Versions/A/TapResearchSDK; sourceTree = "<group>"; };
 		694407AB1F60D62800E7C7F2 /* RNTapResearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTapResearch.h; sourceTree = "<group>"; };
 		694407AC1F60D62800E7C7F2 /* RNTapResearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTapResearch.m; sourceTree = "<group>"; };
 		694407FA1F60E8DC00E7C7F2 /* libRNTapResearchSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTapResearchSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,18 +43,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B406A662047410C0061B993 /* TapResearchSDK in Frameworks */,
+				3B40697C204717F40061B993 /* TapResearchSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B4069762047176A0061B993 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3B406A652047410C0061B993 /* TapResearchSDK */,
+				3B406980204718520061B993 /* SystemConfiguration.framework */,
+				3B40697F204718460061B993 /* Security.framework */,
+				3B40697E2047183F0061B993 /* AdSupport.framework */,
+				3B40697D204718360061B993 /* MobileCoreServices.framework */,
+				3B40697B204717F40061B993 /* TapResearchSDK.framework */,
+				3B40697A204717B40061B993 /* UIKit.framework */,
+				3B406979204717A50061B993 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
 				694407AB1F60D62800E7C7F2 /* RNTapResearch.h */,
 				694407AC1F60D62800E7C7F2 /* RNTapResearch.m */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				3B4069762047176A0061B993 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -127,6 +155,7 @@
 		694408011F60E8DC00E7C7F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -137,6 +166,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../../ios/Pods/TapResearch",
 					"$(PROJECT_DIR)/../../../ios",
+					"$(PROJECT_DIR)",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -145,7 +175,11 @@
 					"$(SRCROOT)/../../react-native/React/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = "-ObjC";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TapResearchSDK.framework/Versions/A",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -154,6 +188,7 @@
 		694408021F60E8DC00E7C7F2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -164,6 +199,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../../ios/Pods/TapResearch",
 					"$(PROJECT_DIR)/../../../ios",
+					"$(PROJECT_DIR)",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -172,7 +208,11 @@
 					"$(SRCROOT)/../../react-native/React/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = "-ObjC";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TapResearchSDK.framework/Versions/A",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
