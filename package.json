@@ -1,6 +1,6 @@
 {
 	"name": "react-native-tapresearch",
-	"version": "2.0.1-beta1",
+	"version": "2.0.1-beta2",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
