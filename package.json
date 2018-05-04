@@ -16,7 +16,7 @@
     "url": "https://www.tapresearch.com"
   },
 	"keywords": [
-	"react-native",
+		"react-native",
     "TapResearch",
     "Market Research",
     "monetization",
@@ -30,4 +30,9 @@
   },
 	"homepage": "https://www.tapresearch.com"
 
+	"rnpm": {
+	 "ios": {
+		 "sourceDir": "./ios"
+	 }
+ 	}
 }
