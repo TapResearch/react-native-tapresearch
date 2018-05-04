@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B40697C204717F40061B993 /* TapResearchSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B40697B204717F40061B993 /* TapResearchSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		3B406A662047410C0061B993 /* TapResearchSDK in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B406A652047410C0061B993 /* TapResearchSDK */; };
+		3B3BC39F209CB296005B0B3E /* TapResearchSDK in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3BC39E209CB296005B0B3E /* TapResearchSDK */; };
 		69E031A21F60EF3B00B29EB7 /* RNTapResearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 694407AC1F60D62800E7C7F2 /* RNTapResearch.m */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +24,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3B3BC39E209CB296005B0B3E /* TapResearchSDK */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = TapResearchSDK; sourceTree = "<group>"; };
+		3B3BC3A1209CB33F005B0B3E /* TRSerilizationHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TRSerilizationHelper.h; sourceTree = SOURCE_ROOT; };
+		3B3BC3A2209CB33F005B0B3E /* TapResearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapResearch.h; sourceTree = SOURCE_ROOT; };
+		3B3BC3A3209CB33F005B0B3E /* TRPlacement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TRPlacement.h; sourceTree = SOURCE_ROOT; };
+		3B3BC3A4209CB33F005B0B3E /* TapResearchSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapResearchSDK.h; sourceTree = SOURCE_ROOT; };
+		3B3BC3A5209CB33F005B0B3E /* TRReward.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TRReward.h; sourceTree = SOURCE_ROOT; };
 		3B406979204717A50061B993 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3B40697A204717B40061B993 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3B40697B204717F40061B993 /* TapResearchSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TapResearchSDK.framework; sourceTree = "<group>"; };
@@ -32,7 +37,6 @@
 		3B40697E2047183F0061B993 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		3B40697F204718460061B993 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3B406980204718520061B993 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		3B406A652047410C0061B993 /* TapResearchSDK */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = TapResearchSDK; path = TapResearchSDK.framework/Versions/A/TapResearchSDK; sourceTree = "<group>"; };
 		694407AB1F60D62800E7C7F2 /* RNTapResearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTapResearch.h; sourceTree = "<group>"; };
 		694407AC1F60D62800E7C7F2 /* RNTapResearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTapResearch.m; sourceTree = "<group>"; };
 		694407FA1F60E8DC00E7C7F2 /* libRNTapResearchSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTapResearchSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,18 +47,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B406A662047410C0061B993 /* TapResearchSDK in Frameworks */,
-				3B40697C204717F40061B993 /* TapResearchSDK.framework in Frameworks */,
+				3B3BC39F209CB296005B0B3E /* TapResearchSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B3BC3A0209CB303005B0B3E /* public */ = {
+			isa = PBXGroup;
+			children = (
+				3B3BC3A2209CB33F005B0B3E /* TapResearch.h */,
+				3B3BC3A4209CB33F005B0B3E /* TapResearchSDK.h */,
+				3B3BC3A3209CB33F005B0B3E /* TRPlacement.h */,
+				3B3BC3A5209CB33F005B0B3E /* TRReward.h */,
+				3B3BC3A1209CB33F005B0B3E /* TRSerilizationHelper.h */,
+			);
+			path = public;
+			sourceTree = "<group>";
+		};
 		3B4069762047176A0061B993 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3B406A652047410C0061B993 /* TapResearchSDK */,
+				3B3BC39E209CB296005B0B3E /* TapResearchSDK */,
 				3B406980204718520061B993 /* SystemConfiguration.framework */,
 				3B40697F204718460061B993 /* Security.framework */,
 				3B40697E2047183F0061B993 /* AdSupport.framework */,
@@ -71,6 +86,7 @@
 			children = (
 				694407AB1F60D62800E7C7F2 /* RNTapResearch.h */,
 				694407AC1F60D62800E7C7F2 /* RNTapResearch.m */,
+				3B3BC3A0209CB303005B0B3E /* public */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				3B4069762047176A0061B993 /* Frameworks */,
 			);
@@ -178,6 +194,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TapResearchSDK.framework/Versions/A",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -211,6 +228,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TapResearchSDK.framework/Versions/A",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
