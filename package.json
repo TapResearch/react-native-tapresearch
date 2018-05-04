@@ -25,6 +25,11 @@
   "peerDependencies": {
     "react-native": ">= 0.40.0"
   },
+	"rnpm": {
+	 "ios": {
+		 "sourceDir": "./ios"
+	 }
+ },
 
 	"homepage": "https://www.tapresearch.com"
 }
