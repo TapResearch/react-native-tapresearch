@@ -8,9 +8,6 @@
 	"peerDependencies": {
 		"react-native": ">= 0.40.0"
 	},
-	"bundleDependencies": false,
-	"dependencies": {
-	},
 	"repository": {
     "type": "git",
     "url": "https://www.tapresearch.com"
@@ -28,11 +25,6 @@
   "peerDependencies": {
     "react-native": ">= 0.40.0"
   },
-	"homepage": "https://www.tapresearch.com"
 
-	"rnpm": {
-	 "ios": {
-		 "sourceDir": "./ios"
-	 }
- 	}
+	"homepage": "https://www.tapresearch.com"
 }
