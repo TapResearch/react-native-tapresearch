@@ -1,7 +1,7 @@
 # react-native-tapresearch
 TapResearch React Native SDK v2.0.1
 
-For additional information, please see the [TapResearch React Native SDK integration guide](https://www.tapresearch.com/docs/react-native-integration-guide).
+For additional information, please see the [TapResearch React Native SDK integration guide](https://www.tapresearch.com/docs/react_native_integration_guide).
 
 ## Setup
 
@@ -16,8 +16,8 @@ Run the following commands:
 
 ## Other platforms:
 
-[TapResearch Android SDK integration guide](https://www.tapresearch.com/docs/android-integration-guide)
+[TapResearch Android SDK integration guide](https://www.tapresearch.com/docs/android_integration_guide)
 
-[TapResearch Unity SDK integration guide](https://www.tapresearch.com/docs/unity-integration-guide)
+[TapResearch Unity SDK integration guide](https://www.tapresearch.com/docs/unity_integration_guide)
 
-[TapResearch JavaScript SDK integration guide](https://www.tapresearch.com/docs/javascript-integration-guide)
+[TapResearch JavaScript SDK integration guide](https://www.tapresearch.com/docs/javascript_integration_guide)
