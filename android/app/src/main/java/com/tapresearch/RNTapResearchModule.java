@@ -30,7 +30,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
 
     private static final String TAG = "TRLogTag";
     private static final String DEVELOPMENT_PLATFORM_NAME = "react";
-    private static final String DEVELOPMENT_PLATFORM_VERSION = "2.0.1";
+    private static final String DEVELOPMENT_PLATFORM_VERSION = "2.0.2";
 
     private final ReactApplicationContext mReactContext;
     private Map<String, TRPlacement> mPlacementMap = new HashMap();
@@ -67,16 +67,36 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
         }
     }
 
+    @Deprecated
     @ReactMethod
     public void initPlacement(String placementIdentifier, final Callback placementCallback) {
         if (mInitialized) {
             TapResearch.getInstance().initPlacement(placementIdentifier, new PlacementListener() {
                 @Override
                 public void onPlacementReady(TRPlacement placement) {
-                    RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
+                    if (placement.getPlacementCode() != TRPlacement.PLACEMENT_CODE_SDK_NOT_READY) {
+                        RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
+                        JSONObject jsonObject = new JsonHelper().toJson(placement);
+                        WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
+                        placementCallback.invoke(params);
+                      }
+                }
+            });
+        }
+    }
+
+    @ReactMethod
+    public void initPlacementEvent(String placementIdentifier) {
+        if (mInitialized) {
+            TapResearch.getInstance().initPlacement(placementIdentifier, new PlacementListener() {
+                @Override
+                public void onPlacementReady(TRPlacement placement) {
                     JSONObject jsonObject = new JsonHelper().toJson(placement);
                     WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
-                    placementCallback.invoke(params);
+                    if (placement.getPlacementCode() != TRPlacement.PLACEMENT_CODE_SDK_NOT_READY) {
+                        RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
+                    }
+                    sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementReady", params);
                 }
             });
         }

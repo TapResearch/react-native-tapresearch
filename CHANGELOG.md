@@ -1,6 +1,12 @@
 # Change Log
 =============
 
+## v2.0.2
+* Introducing `initPlacementEvent` and `PLACEMENT_CODE_SDK_NOT_READY` to handle placement errors
+* Deprecating `initPlacement`
+* Support Pure Spectrum surveys
+* Bug fixes
+
 ## v2.0.1
 * Package the iOS library and headers in the RNTapResearch project and not in a framework  
 

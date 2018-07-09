@@ -26,6 +26,7 @@ RCT_EXPORT_METHOD(setUniqueUserIdentifier:(NSString *)userIdentifier)
   [TapResearch setUniqueUserIdentifier:userIdentifier];
 }
 
+/* Deprecated */
 RCT_EXPORT_METHOD(initPlacement:(NSString *)placementIdentifier callback:(RCTResponseSenderBlock) callback)
 {
   if (!placementsCache) {
@@ -35,6 +36,19 @@ RCT_EXPORT_METHOD(initPlacement:(NSString *)placementIdentifier callback:(RCTRes
     [placementsCache setObject:placement forKey:placement.placementIdentifier];
     NSDictionary *placementDict = [TRSerilizationHelper dictionaryWithPropertiesOfObject:placement];
     callback(@[placementDict]);
+  }];
+}
+
+RCT_EXPORT_METHOD(initPlacementEvent:(NSString *)placementIdentifier)
+{
+  if (!placementsCache) {
+    placementsCache = [[NSMutableDictionary alloc] init];
+  }
+  [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
+    if (placement.placementCode != PLACEMENT_CODE_SDK_NOT_READY) {
+      [placementsCache setObject:placement forKey:placement.placementIdentifier];
+    }
+    [self emitPlacement:placement eventName:@"tapResearchOnPlacementReady"];
   }];
 }
 
@@ -117,6 +131,7 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
            @"tapResearchOnSurveyWallOpened",
            @"tapResearchOnSurveyWallDismissed",
            @"tapResearchOnReceivedReward",
+           @"tapResearchOnPlacementReady"
            ];
 }
 
