@@ -1,5 +1,5 @@
 # react-native-tapresearch
-TapResearch React Native SDK v2.0.2
+TapResearch React Native SDK v2.0.3
 
 For additional information, please see the [TapResearch React Native SDK integration guide](https://www.tapresearch.com/docs/react-native-integration-guide).
 

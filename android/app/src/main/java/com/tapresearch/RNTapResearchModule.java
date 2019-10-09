@@ -30,7 +30,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
 
     private static final String TAG = "TRLogTag";
     private static final String DEVELOPMENT_PLATFORM_NAME = "react";
-    private static final String DEVELOPMENT_PLATFORM_VERSION = "2.0.2";
+    private static final String DEVELOPMENT_PLATFORM_VERSION = "2.0.3";
 
     private final ReactApplicationContext mReactContext;
     private Map<String, TRPlacement> mPlacementMap = new HashMap();
