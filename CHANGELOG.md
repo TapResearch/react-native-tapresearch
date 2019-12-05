@@ -1,9 +1,11 @@
 # Change Log
 =============
+## v2.0.4
+* Android SDK v2.0.9
 
 ## v2.0.3
-* Upgrade android SDK to v2.0.8
-* upgrade iOS SDK to v2.0.9
+* Android SDK to v2.0.8
+* iOS SDK to v2.0.9
 
 ## v2.0.2
 * Introducing `initPlacementEvent` and `PLACEMENT_CODE_SDK_NOT_READY` to handle placement errors
