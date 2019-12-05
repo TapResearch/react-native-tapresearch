@@ -42,5 +42,5 @@ repositories {
 
 dependencies {
   compile 'com.facebook.react:react-native:+'
-  compile 'com.tapr:tapresearch:2.0.8'
+  compile 'com.tapr:tapresearch:2.0.9'
 }
