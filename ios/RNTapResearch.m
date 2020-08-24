@@ -34,7 +34,7 @@ RCT_EXPORT_METHOD(initPlacement:(NSString *)placementIdentifier callback:(RCTRes
   }
   [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
     [placementsCache setObject:placement forKey:placement.placementIdentifier];
-    NSDictionary *placementDict = [TRSerilizationHelper dictionaryWithPropertiesOfObject:placement];
+    NSDictionary *placementDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:placement];
     callback(@[placementDict]);
   }];
 }
@@ -98,7 +98,7 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
 
 - (void)emitPlacement:(TRPlacement *)placement eventName:(NSString *)eventName
 {
-  NSDictionary *placementDict = [TRSerilizationHelper dictionaryWithPropertiesOfObject:placement];
+  NSDictionary *placementDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:placement];
   NSLog(@"Sending event %@", eventName);
   [self sendEventWithName:eventName body:placementDict];
 }
@@ -108,7 +108,7 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
 - (void)tapResearchDidReceiveReward:(TRReward *)reward
 {
   if (hasListeners) {
-    NSDictionary *rewardDict = [TRSerilizationHelper dictionaryWithPropertiesOfObject:reward];
+    NSDictionary *rewardDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:reward];
     [self sendEventWithName:@"tapResearchOnReceivedReward" body:rewardDict];
   }
 }

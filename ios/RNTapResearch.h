@@ -1,15 +1,9 @@
-#if __has_include(<React/RCTEventEmitter.h>)
-#import <React/RCTEventEmitter.h>
 #import <React/RCTBridgeModule.h>
-#else
-#import "RCTEventEmitter.h"
-#import "RCTBridgeModule.h"
-#endif
-
-#import "TapResearchSDK.h"
+#import <React/RCTEventEmitter.h>
+#import <TapResearchSDK/TapResearchSDK.h>
 
 #define PLATFORM @"react"
-#define PLATFORM_VERSION @"2.0.3"
+#define PLATFORM_VERSION @"2.0.4"
 
 @interface RNTapResearch : RCTEventEmitter <RCTBridgeModule, TapResearchRewardDelegate, TapResearchSurveyDelegate>
 

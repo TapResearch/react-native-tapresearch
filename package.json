@@ -1,7 +1,16 @@
 {
 	"name": "react-native-tapresearch",
-	"version": "2.0.4",
+	"version": "2.0.5",
 	"main": "index.js",
+    "description":"TapResearch React Native SDK",
+    "files": [
+      "src",
+      "lib",
+      "android",
+      "ios",
+      "cpp",
+      "react-native-tapresearch.podspec"
+    ],
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
