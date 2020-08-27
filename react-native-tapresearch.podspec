@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   
 
   s.dependency "React"
-  s.dependency "TapResearch", "2.0.11"
+  s.dependency "TapResearch", "2.1.1"
 end

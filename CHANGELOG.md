@@ -1,5 +1,9 @@
 # Change Log
 =============
+## v2.0.5
+* Android SDK v2.0.19
+* iOS SDK v2.1.1 (Xcode12 iOS14 support)
+
 ## v2.0.4
 * Android SDK v2.0.9
 
