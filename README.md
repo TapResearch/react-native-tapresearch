@@ -1,21 +1,22 @@
 # react-native-tapresearch
 
-For additional information, please see the [TapResearch React Native SDK integration guide](https://www.tapresearch.com/docs/react-native-integration-guide).
+For additional information, please see the [TapResearch React Native SDK integration guide](https://supply-docs.tapresearch.com/docs/react-integration).
 
 ## Setup
 
-Create an [app](/supplier_dashboard/dashboard/apps/new) and grab your API Token.
+Create an [app](https://www.tapresearch.com/supplier_dashboard/overview) and grab your API Token.
 
 
 ## Installation
 Run the following commands:
 
-1. `$ yarn add ract-native-tapresearch`
+1. `$ yarn add react-native-tapresearch`
+2. `$ react-native link react-native-tapresearch`
 
 ## Other platforms:
 
-[TapResearch Android SDK integration guide](https://www.tapresearch.com/docs/android-integration-guide)
+[TapResearch Android SDK integration guide](https://supply-docs.tapresearch.com/docs/android-integration)
 
-[TapResearch Unity SDK integration guide](https://www.tapresearch.com/docs/unity-integration-guide)
+[TapResearch Unity SDK integration guide](https://supply-docs.tapresearch.com/docs/unity-integration)
 
-[TapResearch JavaScript SDK integration guide](https://www.tapresearch.com/docs/javascript-integration-guide)
+[TapResearch iOS SDK integration guide](https://supply-docs.tapresearch.com/docs/ios-integration)
