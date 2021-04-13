@@ -16,12 +16,12 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
@@ -49,6 +49,6 @@ allprojects {
 }
 
 dependencies {
-  compile 'com.facebook.react:react-native:+'
-  compile 'com.tapr:tapresearch:2.0.12'
+  implementation 'com.facebook.react:react-native:+'
+  implementation 'com.tapr:tapresearch:2.0.15'
 }
