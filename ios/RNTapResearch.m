@@ -5,6 +5,7 @@
 @implementation RNTapResearch
 {
   bool hasListeners;
+  BOOL receiveRewardCollection;
   NSMutableDictionary *placementsCache;
 }
 
@@ -24,6 +25,11 @@ RCT_EXPORT_METHOD(initWithApiToken:(NSString *)apiToken)
 RCT_EXPORT_METHOD(setUniqueUserIdentifier:(NSString *)userIdentifier)
 {
   [TapResearch setUniqueUserIdentifier:userIdentifier];
+}
+
+RCT_EXPORT_METHOD(setReceiveRewardCollection:(BOOL)enabled)
+{
+    [self _setReceiveRewardCollection:enabled];
 }
 
 /* Deprecated */
@@ -113,6 +119,34 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
   }
 }
 
+- (void)tapResearchDidReceiveRewards:(NSArray<TRReward *> *)rewards {
+    if(!hasListeners) return;
+    
+    NSArray *rewardArray = [self dictionaryWithPropertiesOfObject:rewards];
+    
+    if(receiveRewardCollection){
+        [self sendEventWithName:@"tapResearchOnReceivedReward" body:rewardArray];
+        return;
+    }
+    
+    for (TRReward *reward in rewardArray) {
+        [self sendEventWithName:@"tapResearchOnReceivedReward" body:reward];
+    }
+}
+
+- (NSArray *) dictionaryWithPropertiesOfObject:(id)obj
+{
+    NSInteger arrayCount = [obj count];
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:arrayCount];
+    
+    for (int i = 0; i < arrayCount;i++){
+        NSDictionary *rewardDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:obj[i]];
+        [array addObject:rewardDict];
+    }
+    
+    return array;
+}
+
 #pragma Lifecycle
 
 -(void)startObserving
@@ -123,6 +157,10 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
 -(void)stopObserving
 {
   hasListeners = NO;
+}
+
+-(void)_setReceiveRewardCollection:(BOOL)enabled{
+  receiveRewardCollection = enabled;
 }
 
 - (NSArray<NSString *> *)supportedEvents
