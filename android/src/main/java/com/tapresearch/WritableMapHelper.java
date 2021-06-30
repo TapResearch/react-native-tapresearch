@@ -57,7 +57,7 @@ public class WritableMapHelper {
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
                 Object value = jsonArray.get(i);
-                if (value instanceof JSONObject) {
+                 if (value instanceof JSONObject) {
                     array.pushMap(convertJsonToMap((JSONObject) value));
                 } else if (value instanceof JSONArray) {
                     array.pushArray(convertJsonToArray((JSONArray) value));

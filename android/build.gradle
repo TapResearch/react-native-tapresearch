@@ -37,11 +37,10 @@ repositories {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
         url "$rootDir/../node_modules/react-native/android"
     }
-    maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
+   maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
 }
 
 allprojects {
-
     repositories {
         maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
     }
@@ -50,5 +49,5 @@ allprojects {
 
 dependencies {
   implementation 'com.facebook.react:react-native:+'
-  implementation 'com.tapr:tapresearch:2.0.15'
+  implementation 'com.tapr:tapresearch:2.2.1'
 }
