@@ -16,7 +16,6 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.tapr.b.e.i.g;
 import com.tapr.helpers.JsonHelper;
 import com.tapr.internal.activities.survey.SurveyActivity;
 import com.tapr.sdk.PlacementListener;
