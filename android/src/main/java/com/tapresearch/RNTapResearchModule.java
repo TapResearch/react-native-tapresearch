@@ -205,7 +205,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
         try {
             JSONArray payloadString = (JSONArray) JsonHelper.toJSON(rewards);
             WritableArray writableArray = WritableMapHelper.convertJsonToArray(payloadString);
-            sendEvent(mReactContext, "tapResearchOnReceivedReward", writableArray);
+            sendEvent(mReactContext, "tapResearchOnReceivedRewardCollection", writableArray);
             TapResearch.getInstance().setRewardCollectionListener(null);
         } catch (JSONException exception) {
             exception.printStackTrace();

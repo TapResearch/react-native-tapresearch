@@ -111,21 +111,13 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
 
 #pragma mark - TapResearchRewardsDelegate
 
-- (void)tapResearchDidReceiveReward:(TRReward *)reward
-{
-  if (hasListeners) {
-    NSDictionary *rewardDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:reward];
-    [self sendEventWithName:@"tapResearchOnReceivedReward" body:rewardDict];
-  }
-}
-
 - (void)tapResearchDidReceiveRewards:(NSArray<TRReward *> *)rewards {
     if(!hasListeners) return;
     
     NSArray *rewardArray = [self dictionaryWithPropertiesOfObject:rewards];
     
     if(receiveRewardCollection){
-        [self sendEventWithName:@"tapResearchOnReceivedReward" body:rewardArray];
+        [self sendEventWithName:@"tapResearchOnReceivedRewardCollection" body:rewardArray];
         return;
     }
     
@@ -169,6 +161,7 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
            @"tapResearchOnSurveyWallOpened",
            @"tapResearchOnSurveyWallDismissed",
            @"tapResearchOnReceivedReward",
+           @"tapResearchOnReceivedRewardCollection",
            @"tapResearchOnPlacementReady"
            ];
 }
