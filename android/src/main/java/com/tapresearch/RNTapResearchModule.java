@@ -15,11 +15,13 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.tapr.helpers.JsonHelper;
 import com.tapr.internal.activities.survey.SurveyActivity;
 import com.tapr.sdk.PlacementListener;
 import com.tapr.sdk.RewardCollectionListener;
+import com.tapr.sdk.FastPassPlacementListener;
 import com.tapr.sdk.RewardListener;
 import com.tapr.sdk.SurveyListener;
 import com.tapr.sdk.TRPlacement;
@@ -113,6 +115,27 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
     public void initWithApiToken(String apiToken) {
         if (getCurrentActivity() != null) {
             TapResearch.configure(apiToken, getCurrentActivity(), DEVELOPMENT_PLATFORM_NAME, DEVELOPMENT_PLATFORM_VERSION);
+            TapResearch.getInstance().setFastPassPlacementListener(new FastPassPlacementListener() {
+                @Override
+                public void placementReady(TRPlacement placement) {
+                    Log.d(TAG, "onFastPassPlacementReady: " + placement.getPlacementIdentifier());
+                    JSONObject jsonObject = new JsonHelper().toJson(placement);
+                    WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
+                    if (placement.getPlacementCode() != TRPlacement.PLACEMENT_CODE_SDK_NOT_READY) {
+                        RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
+                    }
+                    sendEvent(RNTapResearchModule.this.mReactContext, "onFastPassPlacementReady", params);
+                }
+    
+                @Override
+                public void placementExpired(String placementId) {
+                    Log.d(TAG, "onFastPassPlacementExpired: " + placementId);
+                    WritableMap writableMap = new WritableNativeMap();
+                    writableMap.putString("placementId", placementId);
+                    sendEvent(RNTapResearchModule.this.mReactContext, "onFastPassPlacementExpired", writableMap);
+                }
+            });
+
             mInitialized = true;
         } else {
             Log.w(TAG, "SDK initialization failed because getCurrentActivity == null");
