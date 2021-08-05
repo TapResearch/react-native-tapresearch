@@ -12,13 +12,16 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.tapr.helpers.JsonHelper;
 import com.tapr.internal.activities.survey.SurveyActivity;
+import com.tapr.sdk.PlacementCustomParameters;
 import com.tapr.sdk.PlacementListener;
 import com.tapr.sdk.RewardCollectionListener;
 import com.tapr.sdk.FastPassPlacementListener;
@@ -126,7 +129,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
                     }
                     sendEvent(RNTapResearchModule.this.mReactContext, "onFastPassPlacementReady", params);
                 }
-    
+
                 @Override
                 public void placementExpired(String placementId) {
                     Log.d(TAG, "onFastPassPlacementExpired: " + placementId);
@@ -193,6 +196,11 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void showSurveyWall(final ReadableMap placement) {
+        showSurveyWall(placement, null);
+    }
+
+    @ReactMethod
+    public void showSurveyWall(final ReadableMap placement, ReadableArray customParameters) {
         String placementIdentifier = placement.getString("placementIdentifier");
         if (placementIdentifier == null || placementIdentifier.isEmpty()) {
             Log.e(TAG, "placementIdentifier is empty can't show survey wall");
@@ -205,6 +213,8 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
             return;
         }
 
+        PlacementCustomParameters placementCustomParameters =
+                PlacementCustomParametersHelper.convertReadableMapToCustomParameters(customParameters);
         nativePlacement.showSurveyWall(new SurveyListener() {
             @Override
             public void onSurveyWallOpened() {
@@ -220,7 +230,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
                 WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
                 sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnSurveyWallDismissed", params);
             }
-        });
+        }, placementCustomParameters);
     }
 
     @Override
