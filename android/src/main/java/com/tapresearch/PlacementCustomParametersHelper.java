@@ -11,7 +11,7 @@ public class PlacementCustomParametersHelper {
     private static String TAG = PlacementCustomParametersHelper.class.getSimpleName();
 
     public static PlacementCustomParameters convertReadableMapToCustomParameters(ReadableArray readableArray) {
-        if (readableArray != null) return null;
+        if (readableArray == null) return null;
 
         PlacementCustomParameters placementCustomParameters = new PlacementCustomParameters();
         for (int i = 0; i < readableArray.size(); i++) {
