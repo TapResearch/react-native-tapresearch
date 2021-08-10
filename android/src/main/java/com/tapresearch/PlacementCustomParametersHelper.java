@@ -8,29 +8,28 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.tapr.sdk.PlacementCustomParameters;
 
 public class PlacementCustomParametersHelper {
-    private static String TAG = PlacementCustomParametersHelper.class.getSimpleName();
+    private static final String TAG = PlacementCustomParametersHelper.class.getSimpleName();
 
-    public static PlacementCustomParameters convertReadableMapToCustomParameters(ReadableArray readableArray) {
-        if (readableArray == null) return null;
+
+    public static PlacementCustomParameters convertReadableMapToCustomParameters(ReadableMap readableMap) {
+        if (readableMap == null) return null;
 
         PlacementCustomParameters placementCustomParameters = new PlacementCustomParameters();
-        for (int i = 0; i < readableArray.size(); i++) {
-            ReadableMap readableMap = readableArray.getMap(i);
-            ReadableMapKeySetIterator readableMapKeySetIterator = readableMap.keySetIterator();
-            if (readableMapKeySetIterator.hasNextKey()) {
-                String key = readableMapKeySetIterator.nextKey();
-                String value = readableMap.getString(key);
-                try {
-                    placementCustomParameters.addParameter(
-                            new PlacementCustomParameters.PlacementParameter.Builder()
-                                    .key(key)
-                                    .value(value)
-                                    .build());
-                } catch (PlacementCustomParameters.PlacementCustomParametersException e) {
-                    Log.w(TAG, "showSurveyWall", e);
-                }
+        ReadableMapKeySetIterator readableMapKeySetIterator = readableMap.keySetIterator();
+        while (readableMapKeySetIterator.hasNextKey()) {
+            String key = readableMapKeySetIterator.nextKey();
+            String value = readableMap.getString(key);
+            try {
+                placementCustomParameters.addParameter(
+                        new PlacementCustomParameters.PlacementParameter.Builder()
+                                .key(key)
+                                .value(value)
+                                .build());
+            } catch (PlacementCustomParameters.PlacementCustomParametersException e) {
+                Log.w(TAG, "showSurveyWall", e);
             }
         }
+        Log.e(TAG, "convertReadableMapToCustomParameters: " + placementCustomParameters);
         return placementCustomParameters;
     }
 }

@@ -14,7 +14,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
@@ -44,7 +43,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
 
     private static final String TAG = "TRLogTag";
     private static final String DEVELOPMENT_PLATFORM_NAME = "react";
-    private static final String DEVELOPMENT_PLATFORM_VERSION = "2.2.1";
+    private static final String DEVELOPMENT_PLATFORM_VERSION = "2.3.0";
 
     private final ReactApplicationContext mReactContext;
     private Map<String, TRPlacement> mPlacementMap = new HashMap();
@@ -200,21 +199,26 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
-    public void showSurveyWall(final ReadableMap placement, ReadableArray customParameters) {
+    public void showSurveyWall(final ReadableMap placement, ReadableMap customParameters) {
         String placementIdentifier = placement.getString("placementIdentifier");
-        if (placementIdentifier == null || placementIdentifier.isEmpty()) {
+
+        PlacementCustomParameters placementCustomParameters =
+                PlacementCustomParametersHelper.convertReadableMapToCustomParameters(customParameters);
+        showSurveyWall(placementIdentifier, placementCustomParameters);
+    }
+
+    private void showSurveyWall(final String placementId, PlacementCustomParameters placementCustomParameters) {
+        if (placementId == null || placementId.isEmpty()) {
             Log.e(TAG, "placementIdentifier is empty can't show survey wall");
             return;
         }
 
-        final TRPlacement nativePlacement = mPlacementMap.get(placementIdentifier);
+        final TRPlacement nativePlacement = mPlacementMap.get(placementId);
         if (nativePlacement == null) {
             Log.e(TAG, "Native placement is empty can't load the survey wall");
             return;
         }
 
-        PlacementCustomParameters placementCustomParameters =
-                PlacementCustomParametersHelper.convertReadableMapToCustomParameters(customParameters);
         nativePlacement.showSurveyWall(new SurveyListener() {
             @Override
             public void onSurveyWallOpened() {
