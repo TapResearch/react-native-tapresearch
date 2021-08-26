@@ -12,7 +12,6 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
@@ -21,9 +20,9 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.tapr.helpers.JsonHelper;
 import com.tapr.internal.activities.survey.SurveyActivity;
 import com.tapr.sdk.PlacementCustomParameters;
+import com.tapr.sdk.PlacementEventListener;
 import com.tapr.sdk.PlacementListener;
 import com.tapr.sdk.RewardCollectionListener;
-import com.tapr.sdk.FastPassPlacementListener;
 import com.tapr.sdk.RewardListener;
 import com.tapr.sdk.SurveyListener;
 import com.tapr.sdk.TRPlacement;
@@ -116,8 +115,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
     @ReactMethod
     public void initWithApiToken(String apiToken) {
         if (getCurrentActivity() != null) {
-            TapResearch.configure(apiToken, getCurrentActivity(), DEVELOPMENT_PLATFORM_NAME, DEVELOPMENT_PLATFORM_VERSION);
-            TapResearch.getInstance().setFastPassPlacementListener(new FastPassPlacementListener() {
+            TapResearch.configure(apiToken, getCurrentActivity(), DEVELOPMENT_PLATFORM_NAME, DEVELOPMENT_PLATFORM_VERSION, new PlacementEventListener() {
                 @Override
                 public void placementReady(TRPlacement placement) {
                     Log.d(TAG, "onFastPassPlacementReady: " + placement.getPlacementIdentifier());
@@ -127,10 +125,12 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
                         RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
                     }
                     sendEvent(RNTapResearchModule.this.mReactContext, "onFastPassPlacementReady", params);
+
                 }
 
                 @Override
-                public void placementExpired(String placementId) {
+                public void placementUnavailable(String placementId) {
+
                     Log.d(TAG, "onFastPassPlacementExpired: " + placementId);
                     WritableMap writableMap = new WritableNativeMap();
                     writableMap.putString("placementId", placementId);
