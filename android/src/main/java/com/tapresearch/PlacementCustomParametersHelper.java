@@ -29,7 +29,6 @@ public class PlacementCustomParametersHelper {
                 Log.w(TAG, "showSurveyWall", e);
             }
         }
-        Log.e(TAG, "convertReadableMapToCustomParameters: " + placementCustomParameters);
         return placementCustomParameters;
     }
 }

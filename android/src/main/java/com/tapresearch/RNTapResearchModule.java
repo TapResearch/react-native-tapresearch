@@ -118,23 +118,23 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
             TapResearch.configure(apiToken, getCurrentActivity(), DEVELOPMENT_PLATFORM_NAME, DEVELOPMENT_PLATFORM_VERSION, new PlacementEventListener() {
                 @Override
                 public void placementReady(TRPlacement placement) {
-                    Log.d(TAG, "onFastPassPlacementReady: " + placement.getPlacementIdentifier());
+                    Log.d(TAG, "placementReady: " + placement.getPlacementIdentifier());
                     JSONObject jsonObject = new JsonHelper().toJson(placement);
                     WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
                     if (placement.getPlacementCode() != TRPlacement.PLACEMENT_CODE_SDK_NOT_READY) {
                         RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
                     }
-                    sendEvent(RNTapResearchModule.this.mReactContext, "onFastPassPlacementReady", params);
+                    sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementEventReady", params);
 
                 }
 
                 @Override
                 public void placementUnavailable(String placementId) {
 
-                    Log.d(TAG, "onFastPassPlacementExpired: " + placementId);
+                    Log.d(TAG, "placementUnavailable: " + placementId);
                     WritableMap writableMap = new WritableNativeMap();
                     writableMap.putString("placementId", placementId);
-                    sendEvent(RNTapResearchModule.this.mReactContext, "onFastPassPlacementExpired", writableMap);
+                    sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementUnavailable", writableMap);
                 }
             });
 
@@ -195,11 +195,11 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void showSurveyWall(final ReadableMap placement) {
-        showSurveyWall(placement, null);
+        showSurveyWallParams(placement, null);
     }
 
     @ReactMethod
-    public void showSurveyWall(final ReadableMap placement, ReadableMap customParameters) {
+    public void showSurveyWallParams(final ReadableMap placement, ReadableMap customParameters) {
         String placementIdentifier = placement.getString("placementIdentifier");
 
         PlacementCustomParameters placementCustomParameters =
@@ -218,8 +218,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
             Log.e(TAG, "Native placement is empty can't load the survey wall");
             return;
         }
-
-        nativePlacement.showSurveyWall(new SurveyListener() {
+        SurveyListener surveyListener = new SurveyListener() {
             @Override
             public void onSurveyWallOpened() {
                 JSONObject jsonObject = new JsonHelper().toJson(nativePlacement);
@@ -234,7 +233,12 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
                 WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
                 sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnSurveyWallDismissed", params);
             }
-        }, placementCustomParameters);
+        };
+        if (placementCustomParameters == null) {
+            nativePlacement.showSurveyWall(surveyListener);
+            return;
+        }
+        nativePlacement.showSurveyWall(surveyListener, placementCustomParameters);
     }
 
     @Override
