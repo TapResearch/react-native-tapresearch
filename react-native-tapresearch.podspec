@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "9.0" }
+  s.platforms    = { :ios => "9.2" }
   s.source       = { :git => "https://github.com/tapresearch/react-native-tapresearch.git", :tag => "#{s.version}" }
 
   
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   
 
   s.dependency "React"
-  s.dependency "TapResearch", "2.3.0"
+  s.dependency "TapResearch", "2.3.1"
 end
