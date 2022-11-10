@@ -3,10 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		279C076F291D5968003151E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279C076E291D5968003151E5 /* Foundation.framework */; };
+		279C0771291D5972003151E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279C0770291D5972003151E5 /* UIKit.framework */; };
+		279C0773291D597C003151E5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279C0772291D597C003151E5 /* SystemConfiguration.framework */; };
+		279C0775291D5986003151E5 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279C0774291D5986003151E5 /* CoreServices.framework */; };
+		279C0777291D5990003151E5 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279C0776291D5990003151E5 /* AdSupport.framework */; };
+		279C0779291D5998003151E5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279C0778291D5998003151E5 /* Security.framework */; };
+		27B9F8C7291DAF0B0083E7F5 /* ios.xcarchive in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B9F8C5291DAF0A0083E7F5 /* ios.xcarchive */; };
+		27B9F8C8291DAF0B0083E7F5 /* iossimulator.xcarchive in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B9F8C6291DAF0A0083E7F5 /* iossimulator.xcarchive */; };
+		27B9F8CA291DAF360083E7F5 /* TapResearchSDK in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B9F8C9291DAF360083E7F5 /* TapResearchSDK */; platformFilter = ios; };
 		69E031A21F60EF3B00B29EB7 /* RNTapResearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 694407AC1F60D62800E7C7F2 /* RNTapResearch.m */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +32,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		279C076E291D5968003151E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		279C0770291D5972003151E5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		279C0772291D597C003151E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		279C0774291D5986003151E5 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/Library/Frameworks/CoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		279C0776291D5990003151E5 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		279C0778291D5998003151E5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		27B9F8C5291DAF0A0083E7F5 /* ios.xcarchive */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ios.xcarchive; path = ../../xcbuild/TapResearchSDK/ios.xcarchive; sourceTree = "<group>"; };
+		27B9F8C6291DAF0A0083E7F5 /* iossimulator.xcarchive */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = iossimulator.xcarchive; path = ../../xcbuild/TapResearchSDK/iossimulator.xcarchive; sourceTree = "<group>"; };
+		27B9F8C9291DAF360083E7F5 /* TapResearchSDK */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = TapResearchSDK; path = "../../xcbuild/TapResearchSDK/TapResearchSDK.xcframework/ios-arm64_x86_64-simulator/TapResearchSDK.framework/TapResearchSDK"; sourceTree = "<group>"; };
 		3B406979204717A50061B993 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3B40697A204717B40061B993 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3B40697B204717F40061B993 /* TapResearchSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TapResearchSDK.framework; sourceTree = "<group>"; };
@@ -33,6 +51,9 @@
 		694407AB1F60D62800E7C7F2 /* RNTapResearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTapResearch.h; sourceTree = "<group>"; };
 		694407AC1F60D62800E7C7F2 /* RNTapResearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTapResearch.m; sourceTree = "<group>"; };
 		694407FA1F60E8DC00E7C7F2 /* libRNTapResearchSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTapResearchSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8BC83CF3A03052D2C575F36 /* libPods-RNTapResearchSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNTapResearchSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF59D5860C87E5D56B3A8A58 /* Pods-RNTapResearchSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNTapResearchSDK.release.xcconfig"; path = "Target Support Files/Pods-RNTapResearchSDK/Pods-RNTapResearchSDK.release.xcconfig"; sourceTree = "<group>"; };
+		FD45BD27148306DBF5188D3A /* Pods-RNTapResearchSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNTapResearchSDK.debug.xcconfig"; path = "Target Support Files/Pods-RNTapResearchSDK/Pods-RNTapResearchSDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +61,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B9F8CA291DAF360083E7F5 /* TapResearchSDK in Frameworks */,
+				27B9F8C7291DAF0B0083E7F5 /* ios.xcarchive in Frameworks */,
+				27B9F8C8291DAF0B0083E7F5 /* iossimulator.xcarchive in Frameworks */,
+				279C0779291D5998003151E5 /* Security.framework in Frameworks */,
+				279C0777291D5990003151E5 /* AdSupport.framework in Frameworks */,
+				279C0775291D5986003151E5 /* CoreServices.framework in Frameworks */,
+				279C0773291D597C003151E5 /* SystemConfiguration.framework in Frameworks */,
+				279C0771291D5972003151E5 /* UIKit.framework in Frameworks */,
+				279C076F291D5968003151E5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +79,15 @@
 		3B4069762047176A0061B993 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27B9F8C9291DAF360083E7F5 /* TapResearchSDK */,
+				27B9F8C5291DAF0A0083E7F5 /* ios.xcarchive */,
+				27B9F8C6291DAF0A0083E7F5 /* iossimulator.xcarchive */,
+				279C0778291D5998003151E5 /* Security.framework */,
+				279C0776291D5990003151E5 /* AdSupport.framework */,
+				279C0774291D5986003151E5 /* CoreServices.framework */,
+				279C0772291D597C003151E5 /* SystemConfiguration.framework */,
+				279C0770291D5972003151E5 /* UIKit.framework */,
+				279C076E291D5968003151E5 /* Foundation.framework */,
 				3B406980204718520061B993 /* SystemConfiguration.framework */,
 				3B40697F204718460061B993 /* Security.framework */,
 				3B40697E2047183F0061B993 /* AdSupport.framework */,
@@ -56,8 +95,18 @@
 				3B40697B204717F40061B993 /* TapResearchSDK.framework */,
 				3B40697A204717B40061B993 /* UIKit.framework */,
 				3B406979204717A50061B993 /* Foundation.framework */,
+				A8BC83CF3A03052D2C575F36 /* libPods-RNTapResearchSDK.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		76B1F874A8A2008A74C1B48E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FD45BD27148306DBF5188D3A /* Pods-RNTapResearchSDK.debug.xcconfig */,
+				DF59D5860C87E5D56B3A8A58 /* Pods-RNTapResearchSDK.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		83CBB9F61A601CBA00E9B192 = {
@@ -67,6 +116,7 @@
 				694407AC1F60D62800E7C7F2 /* RNTapResearch.m */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				3B4069762047176A0061B993 /* Frameworks */,
+				76B1F874A8A2008A74C1B48E /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -88,6 +138,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 694408001F60E8DC00E7C7F2 /* Build configuration list for PBXNativeTarget "RNTapResearchSDK" */;
 			buildPhases = (
+				CAA23D4681F424CC137D3A16 /* [CP] Check Pods Manifest.lock */,
 				694407F61F60E8DC00E7C7F2 /* Sources */,
 				694407F71F60E8DC00E7C7F2 /* Frameworks */,
 				694407F81F60E8DC00E7C7F2 /* CopyFiles */,
@@ -135,6 +186,31 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CAA23D4681F424CC137D3A16 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RNTapResearchSDK-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		694407F61F60E8DC00E7C7F2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -149,6 +225,7 @@
 /* Begin XCBuildConfiguration section */
 		694408011F60E8DC00E7C7F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD45BD27148306DBF5188D3A /* Pods-RNTapResearchSDK.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -176,6 +253,7 @@
 					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -183,6 +261,7 @@
 		};
 		694408021F60E8DC00E7C7F2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF59D5860C87E5D56B3A8A58 /* Pods-RNTapResearchSDK.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -249,7 +328,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -284,7 +363,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
