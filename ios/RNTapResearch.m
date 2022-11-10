@@ -97,6 +97,45 @@ RCT_EXPORT_METHOD(showSurveyWall:(NSDictionary *)placementDict)
   [placement showSurveyWallWithDelegate:self];
 }
 
+RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict :(NSDictionary *)params)
+{
+  if (!placementsCache) {
+    NSLog(@"Init placement wasn't called there is no available placement");
+    return;
+  }
+  TRPlacementCustomParameterList* placementCustomParameterList = [[TRPlacementCustomParameterList alloc] init];
+  for (NSString* key in [params allKeys]) {
+      NSString* value=[params valueForKey:key];
+      TRPlacementCustomParameter *placementCustomParam = [TRPlacementCustomParameter new];
+      [[[[placementCustomParam builder] key: key] value: value] build];
+
+      [placementCustomParameterList addParameter:placementCustomParam];
+  }
+  NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
+  TRPlacement *placement = [placementsCache objectForKey:placementIdentifier];
+  if (!placement) {
+    NSLog(@"Placement is missing make sure you are passing the right placement");
+    return;
+  }
+
+  [placement displayEvent:self customParameters:placementCustomParameterList];
+}
+
+RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
+{
+  if (!placementsCache) {
+    NSLog(@"Init placement wasn't called there is no available placement");
+    return;
+  }
+  NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
+  TRPlacement *placement = [placementsCache objectForKey:placementIdentifier];
+  if (!placement) {
+    NSLog(@"Placement is missing make sure you are passing the right placement");
+    return;
+  }
+  [placement displayEvent:self];
+}
+
 RCT_EXPORT_METHOD(setNavigationBarColor:(NSString *)hexColor)
 {
   UIColor *color = [RNTapResearch colorFromHexString:hexColor];

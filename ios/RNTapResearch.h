@@ -3,7 +3,7 @@
 #import <TapResearchSDK/TapResearchSDK.h>
 
 #define PLATFORM @"react"
-#define PLATFORM_VERSION @"2.4.2"
+#define PLATFORM_VERSION @"2.5.2"
 
 @interface RNTapResearch : RCTEventEmitter <RCTBridgeModule, TapResearchRewardDelegate, TapResearchSurveyDelegate, TapResearchPlacementDelegate>
 

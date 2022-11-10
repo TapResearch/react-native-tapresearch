@@ -1,6 +1,6 @@
 {
 	"name": "react-native-tapresearch",
-	"version": "2.4.2",
+	"version": "2.5.0",
 	"main": "index.js",
     "description":"TapResearch React Native SDK",
     "files": [
@@ -20,6 +20,9 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/TapResearch/react-native-tapresearch"
+	},
+	"devDependencies": {
+		"@types/react-native": "^0.67.12"
 	},
 	"keywords": [
 		"react-native",

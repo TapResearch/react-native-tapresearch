@@ -19,7 +19,7 @@ import java.util.Iterator;
 
 public class WritableMapHelper {
 
-    private static final String TAG = WritableMapHelper.class.getName();
+    private static final String TAG = "TRLogTag";
 
     public static WritableMap convertJsonToMap(JSONObject jsonObject) {
         WritableMap map = new WritableNativeMap();
