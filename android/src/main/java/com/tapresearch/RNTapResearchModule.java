@@ -126,9 +126,6 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
                         RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
                     }
                     sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementReady", params);
-                    // Here for backwards compatability. Will remove in v3.0
-                    sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementEventReady", params);
-
                 }
 
                 @Override
@@ -161,23 +158,23 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
         this.receiveRewardCollection = receiveRewardCollection;
     }
 
-    @Deprecated
-    @ReactMethod
-    public void initPlacement(String placementIdentifier, final Callback placementCallback) {
-        if (mInitialized) {
-            TapResearch.getInstance().initPlacement(placementIdentifier, new PlacementListener() {
-                @Override
-                public void onPlacementReady(TRPlacement placement) {
-                    if (placement.getPlacementCode() != TRPlacement.PLACEMENT_CODE_SDK_NOT_READY) {
-                        RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
-                        JSONObject jsonObject = new JsonHelper().toJson(placement);
-                        WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
-                        placementCallback.invoke(params);
-                    }
-                }
-            });
-        }
-    }
+//    @Deprecated
+//    @ReactMethod
+//    public void initPlacement(String placementIdentifier, final Callback placementCallback) {
+//        if (mInitialized) {
+//            TapResearch.getInstance().initPlacement(placementIdentifier, new PlacementListener() {
+//                @Override
+//                public void onPlacementReady(TRPlacement placement) {
+//                    if (placement.getPlacementCode() != TRPlacement.PLACEMENT_CODE_SDK_NOT_READY) {
+//                        RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
+//                        JSONObject jsonObject = new JsonHelper().toJson(placement);
+//                        WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
+//                        placementCallback.invoke(params);
+//                    }
+//                }
+//            });
+//        }
+//    }
 
     @Deprecated
     @ReactMethod
@@ -192,8 +189,6 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
                         RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
                     }
                     sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementReady", params);
-                    // Here for backwards compatability. Will remove in v3.0
-                    sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementEventReady", params);
                 }
             });
         }
