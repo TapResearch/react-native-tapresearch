@@ -29,7 +29,7 @@ RCT_EXPORT_METHOD(setUniqueUserIdentifier:(NSString *)userIdentifier)
 
 RCT_EXPORT_METHOD(setReceiveRewardCollection:(BOOL)enabled)
 {
-    [self _setReceiveRewardCollection:enabled];
+  [self _setReceiveRewardCollection:enabled];
 }
 
 RCT_EXPORT_METHOD(showSurveyWallWithParams:(NSDictionary *)placementDict :(NSDictionary *)params)
@@ -45,11 +45,11 @@ RCT_EXPORT_METHOD(showSurveyWallParams:(NSDictionary *)placementDict :(NSDiction
   }
   TRPlacementCustomParameterList* placementCustomParameterList = [[TRPlacementCustomParameterList alloc] init];
   for (NSString* key in [params allKeys]) {
-      NSString* value=[params valueForKey:key];
-      TRPlacementCustomParameter *placementCustomParam = [TRPlacementCustomParameter new];
-      [[[[placementCustomParam builder] key: key] value: value] build];
+    NSString* value=[params valueForKey:key];
+    TRPlacementCustomParameter *placementCustomParam = [TRPlacementCustomParameter new];
+    [[[[placementCustomParam builder] key: key] value: value] build];
 
-      [placementCustomParameterList addParameter:placementCustomParam];
+    [placementCustomParameterList addParameter:placementCustomParam];
   }
   NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
   TRPlacement *placement = [placementsCache objectForKey:placementIdentifier];
@@ -95,12 +95,12 @@ RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
 #pragma mark - TapResearchSurveyDelegate
 - (void)tapResearchSurveyWallOpenedWithPlacement:(TRPlacement *)placement
 {
-    [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallOpened"];
+  [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallOpened"];
 }
 
 - (void)tapResearchSurveyWallDismissedWithPlacement:(TRPlacement *)placement
 {
-    [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallDismissed"];
+  [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallDismissed"];
 }
 
 - (void)emitPlacement:(TRPlacement *)placement eventName:(NSString *)eventName
@@ -127,50 +127,50 @@ RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
 
 - (void)placementReady:(nonnull TRPlacement *)placement
 {
-    if (!placementsCache) {
-      placementsCache = [[NSMutableDictionary alloc] init];
-    }
-    [placementsCache setObject:placement forKey:placement.placementIdentifier];
+  if (!placementsCache) {
+    placementsCache = [[NSMutableDictionary alloc] init];
+  }
+  [placementsCache setObject:placement forKey:placement.placementIdentifier];
   [self emitPlacement:placement eventName:@"tapResearchOnPlacementReady"];
 }
 
 - (void)placementUnavailable:(nonnull NSString *)placementId
 {
-    if (!placementsCache) {
-      placementsCache = [[NSMutableDictionary alloc] init];
-    }
-    [placementsCache removeObjectForKey:placementId];
-    [self sendEventWithName:@"tapResearchOnPlacementUnavailable" body:placementId];
+  if (!placementsCache) {
+    placementsCache = [[NSMutableDictionary alloc] init];
+  }
+  [placementsCache removeObjectForKey:placementId];
+  [self sendEventWithName:@"tapResearchOnPlacementUnavailable" body:placementId];
 }
 
 #pragma mark - TapResearchRewardsDelegate
 
 - (void)tapResearchDidReceiveRewards:(NSArray<TRReward *> *)rewards {
-    if(!hasListeners) return;
+  if(!hasListeners) return;
 
-    NSArray *rewardArray = [self dictionaryWithPropertiesOfObject:rewards];
+  NSArray *rewardArray = [self dictionaryWithPropertiesOfObject:rewards];
 
-    if(receiveRewardCollection){
-        [self sendEventWithName:@"tapResearchOnReceivedRewardCollection" body:rewardArray];
-        return;
-    }
+  if(receiveRewardCollection){
+    [self sendEventWithName:@"tapResearchOnReceivedRewardCollection" body:rewardArray];
+    return;
+  }
 
-    for (TRReward *reward in rewardArray) {
-        [self sendEventWithName:@"tapResearchOnReceivedReward" body:reward];
-    }
+  for (TRReward *reward in rewardArray) {
+    [self sendEventWithName:@"tapResearchOnReceivedReward" body:reward];
+  }
 }
 
 - (NSArray *) dictionaryWithPropertiesOfObject:(id)obj
 {
-    NSInteger arrayCount = [obj count];
-    NSMutableArray *array = [NSMutableArray arrayWithCapacity:arrayCount];
+  NSInteger arrayCount = [obj count];
+  NSMutableArray *array = [NSMutableArray arrayWithCapacity:arrayCount];
 
-    for (int i = 0; i < arrayCount;i++){
-        NSDictionary *rewardDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:obj[i]];
-        [array addObject:rewardDict];
-    }
+  for (int i = 0; i < arrayCount;i++){
+    NSDictionary *rewardDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:obj[i]];
+    [array addObject:rewardDict];
+  }
 
-    return array;
+  return array;
 }
 
 #pragma Lifecycle
@@ -192,17 +192,16 @@ RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
 - (NSArray<NSString *> *)supportedEvents
 {
   return @[
-           @"tapResearchOnSurveyWallOpened",
-           @"tapResearchOnSurveyWallDismissed",
-           @"tapResearchOnReceivedReward",
-           @"tapResearchOnReceivedRewardCollection",
-           @"tapResearchOnPlacementUnavailable",
-           @"tapResearchOnPlacementReady"
-           ];
+    @"tapResearchOnSurveyWallOpened",
+    @"tapResearchOnSurveyWallDismissed",
+    @"tapResearchOnReceivedReward",
+    @"tapResearchOnReceivedRewardCollection",
+    @"tapResearchOnPlacementUnavailable",
+    @"tapResearchOnPlacementReady"
+  ];
 }
 
 #pragma helpers
-
 
 + (UIColor *)colorFromHexString:(NSString *)hexString {
   unsigned rgbValue = 0;

@@ -5,6 +5,6 @@
 #define PLATFORM @"react"
 #define PLATFORM_VERSION @"2.5.0"
 
-@interface RNTapResearch : RCTEventEmitter <RCTBridgeModule, TapResearchRewardDelegate, TapResearchSurveyDelegate, TapResearchPlacementDelegate>
+@interface RNTapResearch : RCTEventEmitter <RCTBridgeModule, TapResearchRewardDelegate, TapResearchSurveyDelegate, TapResearchPlacementDelegate, TapResearchEventDelegate>
 
 @end
