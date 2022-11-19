@@ -48,7 +48,7 @@ RCT_EXPORT_METHOD(showSurveyWallParams:(NSDictionary *)placementDict :(NSDiction
       NSString* value=[params valueForKey:key];
       TRPlacementCustomParameter *placementCustomParam = [TRPlacementCustomParameter new];
       [[[[placementCustomParam builder] key: key] value: value] build];
-        
+
       [placementCustomParameterList addParameter:placementCustomParam];
   }
   NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
@@ -57,7 +57,7 @@ RCT_EXPORT_METHOD(showSurveyWallParams:(NSDictionary *)placementDict :(NSDiction
     NSLog(@"Placement is missing make sure you are passing the right placement");
     return;
   }
-    
+
   [placement showSurveyWallWithDelegate:self customParameters:placementCustomParameterList];
 }
 
@@ -75,6 +75,22 @@ RCT_EXPORT_METHOD(showSurveyWall:(NSDictionary *)placementDict)
   }
   [placement showSurveyWallWithDelegate:self];
 }
+
+RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
+{
+  if (!placementsCache) {
+    NSLog(@"Init placement wasn't called there is no available placement");
+    return;
+  }
+  NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
+  TRPlacement *placement = [placementsCache objectForKey:placementIdentifier];
+  if (!placement) {
+    NSLog(@"Placement is missing make sure you are passing the right placement");
+    return;
+  }
+  [placement displayEvent:placementIdentifier withDisplayDelegate:self surveyDelegate:self];
+}
+
 
 #pragma mark - TapResearchSurveyDelegate
 - (void)tapResearchSurveyWallOpenedWithPlacement:(TRPlacement *)placement
@@ -96,12 +112,12 @@ RCT_EXPORT_METHOD(showSurveyWall:(NSDictionary *)placementDict)
       [events addObject:eventDict];
     }
   }
-  
+
   NSMutableDictionary *placementDict = [NSMutableDictionary dictionaryWithDictionary:[TRSerializationHelper dictionaryWithPropertiesOfObject:placement]];
   placementDict[@"events"] = events;
-  
+
   placementDict[@"isEventAvailable"] = @(placement.events.count > 0);
-  
+
   NSLog(@"Sending event %@", eventName);
   [self sendEventWithName:eventName body:placementDict];
 }
@@ -131,14 +147,14 @@ RCT_EXPORT_METHOD(showSurveyWall:(NSDictionary *)placementDict)
 
 - (void)tapResearchDidReceiveRewards:(NSArray<TRReward *> *)rewards {
     if(!hasListeners) return;
-    
+
     NSArray *rewardArray = [self dictionaryWithPropertiesOfObject:rewards];
-    
+
     if(receiveRewardCollection){
         [self sendEventWithName:@"tapResearchOnReceivedRewardCollection" body:rewardArray];
         return;
     }
-    
+
     for (TRReward *reward in rewardArray) {
         [self sendEventWithName:@"tapResearchOnReceivedReward" body:reward];
     }
@@ -148,12 +164,12 @@ RCT_EXPORT_METHOD(showSurveyWall:(NSDictionary *)placementDict)
 {
     NSInteger arrayCount = [obj count];
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:arrayCount];
-    
+
     for (int i = 0; i < arrayCount;i++){
         NSDictionary *rewardDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:obj[i]];
         [array addObject:rewardDict];
     }
-    
+
     return array;
 }
 
