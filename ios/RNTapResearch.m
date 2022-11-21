@@ -4,7 +4,7 @@
 
 @implementation RNTapResearch
 {
-  bool hasListeners;
+  BOOL hasListeners;
   BOOL receiveRewardCollection;
   NSMutableDictionary *placementsCache;
 }

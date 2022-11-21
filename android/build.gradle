@@ -60,6 +60,5 @@ dependencies {
   //noinspection GradleDynamicVersion
 //  implementation 'com.tapr:tapresearch:2.5.3'
 //    implementation files("/Users/mike/Projects/internal-android-sdk/tapresearchsdk-android/build/outputs/aar/tapresearch.aar")
-    implementation files("/Users/mike/Projects/tmp_libs/tapresearch.aar")
-
+    implementation 'com.tapr:tapresearch:2.5.4+' // Replace with the latest version
 }

@@ -279,7 +279,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
             public void onTapEventOpened() {
                 JSONObject jsonObject = new JsonHelper().toJson(nativePlacement);
                 WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
-                sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnMessageDismissed", params);
+                sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnMessageOpened", params);
             }
 
             @Override
