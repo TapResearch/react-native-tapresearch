@@ -197,7 +197,10 @@ RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
     @"tapResearchOnReceivedReward",
     @"tapResearchOnReceivedRewardCollection",
     @"tapResearchOnPlacementUnavailable",
-    @"tapResearchOnPlacementReady"
+    @"tapResearchOnPlacementReady",
+    // These are not implemented
+    @"tapResearchOnMessageDismissed",
+    @"tapResearchOnMessageOpened"
   ];
 }
 
