@@ -39,17 +39,17 @@ repositories {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
         url "$rootDir/../node_modules/react-native/android"
     }
-//    maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
+    maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
     // When needing to test, comment out the maven line and uncomment the flarDir below
-    flatDir {
-        dirs '/Users/mike/Projects/internal-android-sdk/tapresearchsdk-android/build/outputs/aar'
-    }
+//    flatDir {
+//        dirs '/Users/mike/Projects/internal-android-sdk/tapresearchsdk-android/build/outputs/aar'
+//    }
 }
 
 allprojects {
     repositories {
         // When needing to test, comment out this maven line
-//        maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
+        maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
     }
 }
 
@@ -60,5 +60,5 @@ dependencies {
   //noinspection GradleDynamicVersion
 //  implementation 'com.tapr:tapresearch:2.5.3'
 //    implementation files("/Users/mike/Projects/internal-android-sdk/tapresearchsdk-android/build/outputs/aar/tapresearch.aar")
-    implementation 'com.tapr:tapresearch:2.5.4+' // Replace with the latest version
+    implementation 'com.tapr:tapresearch:2.5.+' // Replace with the latest version
 }
