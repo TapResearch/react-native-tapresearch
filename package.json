@@ -22,7 +22,7 @@
 		"url": "https://github.com/TapResearch/react-native-tapresearch"
 	},
 	"devDependencies": {
-		"@types/react-native": "^0.67.12"
+		"@types/react-native": ">=0.60"
 	},
 	"keywords": [
 		"react-native",
