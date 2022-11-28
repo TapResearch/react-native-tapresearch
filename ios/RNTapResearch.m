@@ -199,8 +199,8 @@ RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
     @"tapResearchOnPlacementUnavailable",
     @"tapResearchOnPlacementReady",
     // These are not implemented
-    @"tapResearchOnMessageDismissed",
-    @"tapResearchOnMessageOpened"
+    @"tapResearchOnEventDismissed",
+    @"tapResearchOnEventOpened"
   ];
 }
 
