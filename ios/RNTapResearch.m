@@ -32,6 +32,32 @@ RCT_EXPORT_METHOD(setReceiveRewardCollection:(BOOL)enabled)
   [self _setReceiveRewardCollection:enabled];
 }
 
+/* Deprecated */
+RCT_EXPORT_METHOD(initPlacement:(NSString *)placementIdentifier callback:(RCTResponseSenderBlock) callback)
+{
+  if (!placementsCache) {
+    placementsCache = [[NSMutableDictionary alloc] init];
+  }
+  [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
+    [placementsCache setObject:placement forKey:placement.placementIdentifier];
+    NSDictionary *placementDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:placement];
+    callback(@[placementDict]);
+  }];
+}
+
+RCT_EXPORT_METHOD(initPlacementEvent:(NSString *)placementIdentifier)
+{
+  if (!placementsCache) {
+    placementsCache = [[NSMutableDictionary alloc] init];
+  }
+  [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
+    if (placement.placementCode != PLACEMENT_CODE_SDK_NOT_READY) {
+      [placementsCache setObject:placement forKey:placement.placementIdentifier];
+    }
+    [self emitPlacement:placement eventName:@"tapResearchOnPlacementReady"];
+  }];
+}
+
 RCT_EXPORT_METHOD(showSurveyWallWithParams:(NSDictionary *)placementDict :(NSDictionary *)params)
 {
   [self showSurveyWallParams:placementDict :params];
