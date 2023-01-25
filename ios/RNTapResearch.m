@@ -19,7 +19,11 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(initWithApiToken:(NSString *)apiToken)
 {
-  [TapResearch initWithApiToken:apiToken developmentPlatform:PLATFORM developmentPlatformVersion:PLATFORM_VERSION rewardDelegate:self placementDelegate:self];
+  [TapResearch initWithApiToken:apiToken
+            developmentPlatform:PLATFORM
+     developmentPlatformVersion:PLATFORM_VERSION
+                 rewardDelegate:self
+              placementDelegate:self];
 }
 
 RCT_EXPORT_METHOD(setUniqueUserIdentifier:(NSString *)userIdentifier)
@@ -30,32 +34,6 @@ RCT_EXPORT_METHOD(setUniqueUserIdentifier:(NSString *)userIdentifier)
 RCT_EXPORT_METHOD(setReceiveRewardCollection:(BOOL)enabled)
 {
   [self _setReceiveRewardCollection:enabled];
-}
-
-/* Deprecated */
-RCT_EXPORT_METHOD(initPlacement:(NSString *)placementIdentifier callback:(RCTResponseSenderBlock) callback)
-{
-  if (!placementsCache) {
-    placementsCache = [[NSMutableDictionary alloc] init];
-  }
-  [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
-    [placementsCache setObject:placement forKey:placement.placementIdentifier];
-    NSDictionary *placementDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:placement];
-    callback(@[placementDict]);
-  }];
-}
-
-RCT_EXPORT_METHOD(initPlacementEvent:(NSString *)placementIdentifier)
-{
-  if (!placementsCache) {
-    placementsCache = [[NSMutableDictionary alloc] init];
-  }
-  [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
-    if (placement.placementCode != PLACEMENT_CODE_SDK_NOT_READY) {
-      [placementsCache setObject:placement forKey:placement.placementIdentifier];
-    }
-    [self emitPlacement:placement eventName:@"tapResearchOnPlacementReady"];
-  }];
 }
 
 RCT_EXPORT_METHOD(showSurveyWallWithParams:(NSDictionary *)placementDict :(NSDictionary *)params)
@@ -117,6 +95,16 @@ RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
   [placement displayEvent:placementIdentifier withDisplayDelegate:self surveyDelegate:self];
 }
 
+#pragma mark - TapResearchEventDelegate
+- (void)tapResearchEventOpenedWithPlacement:(TRPlacement *)placement
+{
+  [self emitPlacement:placement eventName:@"tapResearchOnEventOpened"];
+}
+
+- (void)tapResearchEventDismissedWithPlacement:(TRPlacement *)placement
+{
+  [self emitPlacement:placement eventName:@"tapResearchOnEventDismissed"];
+}
 
 #pragma mark - TapResearchSurveyDelegate
 - (void)tapResearchSurveyWallOpenedWithPlacement:(TRPlacement *)placement
