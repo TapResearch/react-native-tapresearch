@@ -40,25 +40,15 @@ repositories {
         url "$rootDir/../node_modules/react-native/android"
     }
     maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
-    // When needing to test, comment out the maven line and uncomment the flarDir below
-//    flatDir {
-//        dirs '/Users/mike/Projects/internal-android-sdk/tapresearchsdk-android/build/outputs/aar'
-//    }
 }
 
 allprojects {
     repositories {
-        // When needing to test, comment out this maven line
         maven { url "https://artifactory.tools.tapresearch.io/artifactory/tapresearch-android-sdk/" }
     }
 }
 
 dependencies {
-  //noinspection GradleDynamicVersion
-  implementation 'com.facebook.react:react-native:+'
-    // When needing to test, comment out the implementation line
-  //noinspection GradleDynamicVersion
-//  implementation 'com.tapr:tapresearch:2.5.3'
-//    implementation files("/Users/mike/Projects/internal-android-sdk/tapresearchsdk-android/build/outputs/aar/tapresearch.aar")
+    implementation 'com.facebook.react:react-native:+'
     implementation 'com.tapr:tapresearch:2.5.5' // Replace with the latest version
 }

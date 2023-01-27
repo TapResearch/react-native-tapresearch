@@ -13,7 +13,6 @@ Pod::Spec.new do |s|
 
   s.platforms    = { :ios => "12.4" }
   s.source       = { :git => "https://github.com/tapresearch/react-native-tapresearch.git", :tag => "v2.5.6" }
-#   s.source       = { :git => ""}
 
   s.source_files = "ios/**/*.{h,m,mm}"
 

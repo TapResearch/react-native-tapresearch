@@ -11,7 +11,7 @@ Create an [app](https://www.tapresearch.com/supplier_dashboard/overview) and gra
 Run the following commands:
 
 1. `$ yarn add react-native-tapresearch`
-2. `$ react-native link react-native-tapresearch`
+2. `$ react-native link react-native-tapresearch` <- If you're on an old version of RN without autolinking
 
 ## Other platforms:
 
