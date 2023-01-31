@@ -83,7 +83,7 @@ RCT_EXPORT_METHOD(showSurveyWall:(NSDictionary *)placementDict)
 RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
 {
   if (!placementsCache) {
-    NSLog(@"Init placement wasn't called there is no available placement");
+    NSLog(@"There is no available placement");
     return;
   }
   NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
@@ -212,7 +212,6 @@ RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
     @"tapResearchOnReceivedRewardCollection",
     @"tapResearchOnPlacementUnavailable",
     @"tapResearchOnPlacementReady",
-    // These are not implemented
     @"tapResearchOnEventDismissed",
     @"tapResearchOnEventOpened"
   ];
