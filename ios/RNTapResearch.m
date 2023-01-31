@@ -4,7 +4,7 @@
 
 @implementation RNTapResearch
 {
-  bool hasListeners;
+  BOOL hasListeners;
   BOOL receiveRewardCollection;
   NSMutableDictionary *placementsCache;
 }
@@ -19,7 +19,11 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(initWithApiToken:(NSString *)apiToken)
 {
-  [TapResearch initWithApiToken:apiToken developmentPlatform:PLATFORM developmentPlatformVersion:PLATFORM_VERSION rewardDelegate:self placementDelegate:self];
+  [TapResearch initWithApiToken:apiToken
+            developmentPlatform:PLATFORM
+     developmentPlatformVersion:PLATFORM_VERSION
+                 rewardDelegate:self
+              placementDelegate:self];
 }
 
 RCT_EXPORT_METHOD(setUniqueUserIdentifier:(NSString *)userIdentifier)
@@ -29,33 +33,12 @@ RCT_EXPORT_METHOD(setUniqueUserIdentifier:(NSString *)userIdentifier)
 
 RCT_EXPORT_METHOD(setReceiveRewardCollection:(BOOL)enabled)
 {
-    [self _setReceiveRewardCollection:enabled];
+  [self _setReceiveRewardCollection:enabled];
 }
 
-/* Deprecated */
-RCT_EXPORT_METHOD(initPlacement:(NSString *)placementIdentifier callback:(RCTResponseSenderBlock) callback)
+RCT_EXPORT_METHOD(showSurveyWallWithParams:(NSDictionary *)placementDict :(NSDictionary *)params)
 {
-  if (!placementsCache) {
-    placementsCache = [[NSMutableDictionary alloc] init];
-  }
-  [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
-    [placementsCache setObject:placement forKey:placement.placementIdentifier];
-    NSDictionary *placementDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:placement];
-    callback(@[placementDict]);
-  }];
-}
-
-RCT_EXPORT_METHOD(initPlacementEvent:(NSString *)placementIdentifier)
-{
-  if (!placementsCache) {
-    placementsCache = [[NSMutableDictionary alloc] init];
-  }
-  [TapResearch initPlacementWithIdentifier:placementIdentifier placementBlock:^(TRPlacement *placement) {
-    if (placement.placementCode != PLACEMENT_CODE_SDK_NOT_READY) {
-      [placementsCache setObject:placement forKey:placement.placementIdentifier];
-    }
-    [self emitPlacement:placement eventName:@"tapResearchOnPlacementReady"];
-  }];
+  [self showSurveyWallParams:placementDict :params];
 }
 
 RCT_EXPORT_METHOD(showSurveyWallParams:(NSDictionary *)placementDict :(NSDictionary *)params)
@@ -66,11 +49,11 @@ RCT_EXPORT_METHOD(showSurveyWallParams:(NSDictionary *)placementDict :(NSDiction
   }
   TRPlacementCustomParameterList* placementCustomParameterList = [[TRPlacementCustomParameterList alloc] init];
   for (NSString* key in [params allKeys]) {
-      NSString* value=[params valueForKey:key];
-      TRPlacementCustomParameter *placementCustomParam = [TRPlacementCustomParameter new];
-      [[[[placementCustomParam builder] key: key] value: value] build];
-        
-      [placementCustomParameterList addParameter:placementCustomParam];
+    NSString* value=[params valueForKey:key];
+    TRPlacementCustomParameter *placementCustomParam = [TRPlacementCustomParameter new];
+    [[[[placementCustomParam builder] key: key] value: value] build];
+
+    [placementCustomParameterList addParameter:placementCustomParam];
   }
   NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
   TRPlacement *placement = [placementsCache objectForKey:placementIdentifier];
@@ -78,7 +61,7 @@ RCT_EXPORT_METHOD(showSurveyWallParams:(NSDictionary *)placementDict :(NSDiction
     NSLog(@"Placement is missing make sure you are passing the right placement");
     return;
   }
-    
+
   [placement showSurveyWallWithDelegate:self customParameters:placementCustomParameterList];
 }
 
@@ -97,38 +80,58 @@ RCT_EXPORT_METHOD(showSurveyWall:(NSDictionary *)placementDict)
   [placement showSurveyWallWithDelegate:self];
 }
 
-RCT_EXPORT_METHOD(setNavigationBarColor:(NSString *)hexColor)
+RCT_EXPORT_METHOD(displayEvent:(NSDictionary *)placementDict)
 {
-  UIColor *color = [RNTapResearch colorFromHexString:hexColor];
-  [TapResearch setNavigationBarColor:color];
+  if (!placementsCache) {
+    NSLog(@"There is no available placement");
+    return;
+  }
+  NSString *placementIdentifier = [placementDict objectForKey:@"placementIdentifier"];
+  TRPlacement *placement = [placementsCache objectForKey:placementIdentifier];
+  if (!placement) {
+    NSLog(@"Placement is missing make sure you are passing the right placement");
+    return;
+  }
+  [placement displayEvent:placementIdentifier withDisplayDelegate:self surveyDelegate:self];
 }
 
-RCT_EXPORT_METHOD(setNavigationBarText:(NSString *)text)
+#pragma mark - TapResearchEventDelegate
+- (void)tapResearchEventOpenedWithPlacement:(TRPlacement *)placement
 {
-  [TapResearch setNavigationBarText:text];
+  [self emitPlacement:placement eventName:@"tapResearchOnEventOpened"];
 }
 
-RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
+- (void)tapResearchEventDismissedWithPlacement:(TRPlacement *)placement
 {
-  UIColor *color = [RNTapResearch colorFromHexString:hexColor];
-  [TapResearch setNavigationBarTextColor:color];
+  [self emitPlacement:placement eventName:@"tapResearchOnEventDismissed"];
 }
-
 
 #pragma mark - TapResearchSurveyDelegate
 - (void)tapResearchSurveyWallOpenedWithPlacement:(TRPlacement *)placement
 {
-    [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallOpened"];
+  [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallOpened"];
 }
 
 - (void)tapResearchSurveyWallDismissedWithPlacement:(TRPlacement *)placement
 {
-    [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallDismissed"];
+  [self emitPlacement:placement eventName:@"tapResearchOnSurveyWallDismissed"];
 }
 
 - (void)emitPlacement:(TRPlacement *)placement eventName:(NSString *)eventName
 {
-  NSDictionary *placementDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:placement];
+  NSMutableArray *events = [[NSMutableArray alloc] init];
+  if (placement.events.count > 0) {
+    for (TREvent *event in placement.events) {
+      NSDictionary *eventDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:event];
+      [events addObject:eventDict];
+    }
+  }
+
+  NSMutableDictionary *placementDict = [NSMutableDictionary dictionaryWithDictionary:[TRSerializationHelper dictionaryWithPropertiesOfObject:placement]];
+  placementDict[@"events"] = events;
+
+  placementDict[@"isEventAvailable"] = @(placement.events.count > 0);
+
   NSLog(@"Sending event %@", eventName);
   [self sendEventWithName:eventName body:placementDict];
 }
@@ -138,50 +141,50 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
 
 - (void)placementReady:(nonnull TRPlacement *)placement
 {
-    if (!placementsCache) {
-      placementsCache = [[NSMutableDictionary alloc] init];
-    }
-    [placementsCache setObject:placement forKey:placement.placementIdentifier];
-  [self emitPlacement:placement eventName:@"tapResearchOnPlacementEventReady"];
+  if (!placementsCache) {
+    placementsCache = [[NSMutableDictionary alloc] init];
+  }
+  [placementsCache setObject:placement forKey:placement.placementIdentifier];
+  [self emitPlacement:placement eventName:@"tapResearchOnPlacementReady"];
 }
 
 - (void)placementUnavailable:(nonnull NSString *)placementId
 {
-    if (!placementsCache) {
-      placementsCache = [[NSMutableDictionary alloc] init];
-    }
-    [placementsCache removeObjectForKey:placementId];
-    [self sendEventWithName:@"tapResearchOnPlacementUnavailable" body:placementId];
+  if (!placementsCache) {
+    placementsCache = [[NSMutableDictionary alloc] init];
+  }
+  [placementsCache removeObjectForKey:placementId];
+  [self sendEventWithName:@"tapResearchOnPlacementUnavailable" body:placementId];
 }
 
 #pragma mark - TapResearchRewardsDelegate
 
 - (void)tapResearchDidReceiveRewards:(NSArray<TRReward *> *)rewards {
-    if(!hasListeners) return;
-    
-    NSArray *rewardArray = [self dictionaryWithPropertiesOfObject:rewards];
-    
-    if(receiveRewardCollection){
-        [self sendEventWithName:@"tapResearchOnReceivedRewardCollection" body:rewardArray];
-        return;
-    }
-    
-    for (TRReward *reward in rewardArray) {
-        [self sendEventWithName:@"tapResearchOnReceivedReward" body:reward];
-    }
+  if(!hasListeners) return;
+
+  NSArray *rewardArray = [self dictionaryWithPropertiesOfObject:rewards];
+
+  if(receiveRewardCollection){
+    [self sendEventWithName:@"tapResearchOnReceivedRewardCollection" body:rewardArray];
+    return;
+  }
+
+  for (TRReward *reward in rewardArray) {
+    [self sendEventWithName:@"tapResearchOnReceivedReward" body:reward];
+  }
 }
 
 - (NSArray *) dictionaryWithPropertiesOfObject:(id)obj
 {
-    NSInteger arrayCount = [obj count];
-    NSMutableArray *array = [NSMutableArray arrayWithCapacity:arrayCount];
-    
-    for (int i = 0; i < arrayCount;i++){
-        NSDictionary *rewardDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:obj[i]];
-        [array addObject:rewardDict];
-    }
-    
-    return array;
+  NSInteger arrayCount = [obj count];
+  NSMutableArray *array = [NSMutableArray arrayWithCapacity:arrayCount];
+
+  for (int i = 0; i < arrayCount;i++){
+    NSDictionary *rewardDict = [TRSerializationHelper dictionaryWithPropertiesOfObject:obj[i]];
+    [array addObject:rewardDict];
+  }
+
+  return array;
 }
 
 #pragma Lifecycle
@@ -203,18 +206,18 @@ RCT_EXPORT_METHOD(setNavigationBarTextColor:(NSString *)hexColor)
 - (NSArray<NSString *> *)supportedEvents
 {
   return @[
-           @"tapResearchOnSurveyWallOpened",
-           @"tapResearchOnSurveyWallDismissed",
-           @"tapResearchOnReceivedReward",
-           @"tapResearchOnReceivedRewardCollection",
-           @"tapResearchOnPlacementEventReady",
-           @"tapResearchOnPlacementUnavailable",
-           @"tapResearchOnPlacementReady"
-           ];
+    @"tapResearchOnSurveyWallOpened",
+    @"tapResearchOnSurveyWallDismissed",
+    @"tapResearchOnReceivedReward",
+    @"tapResearchOnReceivedRewardCollection",
+    @"tapResearchOnPlacementUnavailable",
+    @"tapResearchOnPlacementReady",
+    @"tapResearchOnEventDismissed",
+    @"tapResearchOnEventOpened"
+  ];
 }
 
 #pragma helpers
-
 
 + (UIColor *)colorFromHexString:(NSString *)hexString {
   unsigned rgbValue = 0;

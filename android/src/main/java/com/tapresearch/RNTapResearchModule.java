@@ -25,6 +25,7 @@ import com.tapr.sdk.PlacementListener;
 import com.tapr.sdk.RewardCollectionListener;
 import com.tapr.sdk.RewardListener;
 import com.tapr.sdk.SurveyListener;
+import com.tapr.sdk.TapEventListener;
 import com.tapr.sdk.TRPlacement;
 import com.tapr.sdk.TRReward;
 import com.tapr.sdk.TapResearch;
@@ -42,7 +43,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
 
     private static final String TAG = "TRLogTag";
     private static final String DEVELOPMENT_PLATFORM_NAME = "react";
-    private static final String DEVELOPMENT_PLATFORM_VERSION = "2.4.2";
+    private static final String DEVELOPMENT_PLATFORM_VERSION = "2.5.0";
 
     private final ReactApplicationContext mReactContext;
     private Map<String, TRPlacement> mPlacementMap = new HashMap();
@@ -124,8 +125,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
                     if (placement.getPlacementCode() != TRPlacement.PLACEMENT_CODE_SDK_NOT_READY) {
                         RNTapResearchModule.this.mPlacementMap.put(placement.getPlacementIdentifier(), placement);
                     }
-                    sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementEventReady", params);
-
+                    sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnPlacementReady", params);
                 }
 
                 @Override
@@ -176,6 +176,7 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
         }
     }
 
+    @Deprecated
     @ReactMethod
     public void initPlacementEvent(String placementIdentifier) {
         if (mInitialized) {
@@ -196,6 +197,12 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
     @ReactMethod
     public void showSurveyWall(final ReadableMap placement) {
         showSurveyWallParams(placement, null);
+    }
+
+    // You cannot overload react methods
+    @ReactMethod
+    public void showSurveyWallWithParams(final ReadableMap placement, ReadableMap customParameters) {
+        showSurveyWallParams(placement, customParameters);
     }
 
     @ReactMethod
@@ -240,6 +247,50 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
         }
         nativePlacement.showSurveyWall(surveyListener, placementCustomParameters);
     }
+
+    // New events work - START
+    @ReactMethod
+    public void displayEvent(final ReadableMap placement) {
+        displayEventWithParams(placement, null);
+    }
+
+    // This method is called `displayEventWithParams` because RN does not support method overloadding :(
+    @ReactMethod
+    public void displayEventWithParams(final ReadableMap placement, ReadableMap customParameters) {
+        String placementId = placement.getString("placementIdentifier");
+        PlacementCustomParameters placementCustomParameters =
+                PlacementCustomParametersHelper.convertReadableMapToCustomParameters(customParameters);
+        displayEvent(placementId, placementCustomParameters);
+    }
+
+    private void displayEvent(final String placementId, final PlacementCustomParameters placementCustomParameters) {
+        if (placementId == null || placementId.isEmpty()) {
+            Log.e(TAG, "placementIdentifier is empty can't show interstitial or survey wall");
+            return;
+        }
+
+        final TRPlacement nativePlacement = mPlacementMap.get(placementId);
+        if (nativePlacement == null) {
+            Log.e(TAG, "Native placement is empty can't load the interstitial or survey wall");
+            return;
+        }
+        nativePlacement.displayEvent(new TapEventListener() {
+            @Override
+            public void onTapEventOpened() {
+                JSONObject jsonObject = new JsonHelper().toJson(nativePlacement);
+                WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
+                sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnEventOpened", params);
+            }
+
+            @Override
+            public void onTapEventDismissed() {
+                JSONObject jsonObject = new JsonHelper().toJson(nativePlacement);
+                WritableMap params = WritableMapHelper.convertJsonToMap(jsonObject);
+                sendEvent(RNTapResearchModule.this.mReactContext, "tapResearchOnEventDismissed", params);
+            }
+        }, placementCustomParameters);
+    }
+    // New events - END
 
     @Override
     public void onDidReceiveReward(List<TRReward> rewards) {
@@ -308,5 +359,18 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
     @Override
     public void onHostDestroy() {
     }
+
+    // Required for rn built in EventEmitter Calls.
+    // Will be needed for react-native 0.80+
+
+//    @ReactMethod
+//    public void addListener(String eventName, final Callback placementCallback) {
+//        Log.d("Debug eventName: ", eventName);
+//    }
+//
+//    @ReactMethod
+//    public void removeListeners(Integer count) {
+//
+//    }
 
 }

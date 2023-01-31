@@ -1,5 +1,9 @@
 # Change Log
 =============
+## v2.5.0
+* Android SDK v2.5.6
+* iOS SDK v2.5.6
+
 ## v2.4.2
 * Android SDK v2.4.2
 * ios SDK v2.4.2
