@@ -113,6 +113,17 @@ public class RNTapResearchModule extends ReactContextBaseJavaModule
         return "RNTapResearch";
     }
 
+    // Required for rn built in EventEmitter Calls.
+    @ReactMethod
+    public void addListener(String eventName) {
+        // noop - just needs to exist
+    }
+
+    @ReactMethod
+    public void removeListeners(Integer count) {
+        // noop - just needs to exist
+    }
+
     @ReactMethod
     public void initWithApiToken(String apiToken) {
         if (getCurrentActivity() != null) {
