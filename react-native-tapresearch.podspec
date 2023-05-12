@@ -12,12 +12,12 @@ Pod::Spec.new do |s|
   s.authors      = package["author"]
 
   s.platforms    = { :ios => "12.4" }
-  s.source       = { :git => "https://github.com/tapresearch/react-native-tapresearch.git", :tag => "v2.5.6" }
+  s.source       = { :git => "https://github.com/tapresearch/react-native-tapresearch.git", :tag => s.version.to_s }
 
   s.source_files = "ios/**/*.{h,m,mm}"
 
   s.dependency "React"
 
   s.dependency "React-Core"
-  s.dependency "TapResearch", "~> 2.5.6"
+  s.dependency "TapResearch", "~> 2.5.8"
 end
