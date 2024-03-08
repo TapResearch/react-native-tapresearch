@@ -1,6 +1,6 @@
 # react-native-tapresearch
 
-For additional information, please see the [TapResearch React Native SDK integration guide](https://supply-docs.tapresearch.com/docs/react-integration).
+For additional information, please see the [TapResearch React Native SDK integration guide](https://supply-docs.tapresearch.com/docs/3.x/basic-integration/sdk-integration/react-native).
 
 ## Setup
 
