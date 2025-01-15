@@ -49,5 +49,5 @@ allprojects {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation 'com.tapr:tapresearch:2.5.9' // Replace with the latest version
+    implementation 'com.tapr:tapresearch:2.5.18' // Replace with the latest version
 }
