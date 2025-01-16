@@ -54,3 +54,6 @@ fastlane/screenshots
 local.properties
 yarn.lock
 Pods
+
+/react-native-integration-demo
+
