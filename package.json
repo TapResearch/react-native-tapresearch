@@ -1,6 +1,6 @@
 {
 	"name": "react-native-tapresearch",
-	"version": "2.5.2",
+	"version": "2.5.3",
 	"main": "index.js",
     "description":"TapResearch React Native SDK",
     "files": [
