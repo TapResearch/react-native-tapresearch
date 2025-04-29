@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.dependency "React"
 
   s.dependency "React-Core"
-  s.dependency "TapResearch", "~> 2.5.8"
+  s.dependency "TapResearch", "~> 2.5.15"
 end
